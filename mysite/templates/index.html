@@ -1,56 +1,28 @@
 {% extends "base.html" %}
+{% block title %} | Home{% endblock %}
 {% block content %}
-        <div id="blog">
-            <div class="content">
-                <table class="contentTable">
-                    <tbody>
-                    {% for entry in blog_entries %}
-                        {% ifnotequal forloop.counter 3 %}<tr>{% endifnotequal %}
-                            <td class="blogPost" {% if forloop.first %}colspan="2" id="topPost"{% endif %}>
-                                <h3><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h3>
-                                <h4>{{ entry.pub_date|date:"F j, Y" }}</h4>
-                                <p>{{ entry.snip }}</p>
-                                <p><a href="{{ entry.get_absolute_url }}">(Read the rest of this entry...)</a></p>
-                            </td>
-                        {% ifnotequal forloop.counter 2 %}</tr>{% endifnotequal %}
-                    {% endfor %}
-                    </tbody>
-                </table>
+        <div id="content">
+            
+            <h2 class="section-title"><a href="{% url blog_index %}">entries</a></h2>
+            <div id="entry-list">
+                {% for entry in blog_entries %}
+                    <h3><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a> <span class="time">POSTED {{ entry.pub_date|timesince|upper }} AGO</span></h3>
+                    <p>{{ entry.snip }} <a href="{{ entry.get_absolute_url }}">(Read more...)</a></p>
+                {% endfor %}
+                   
+                <div class="indicator"><a href="{% url blog_index %}">More blog entries &#187;</a></div>
             </div>
+            
+            <h2 class="section-title"><a href="{% url main_activity %}">activity</a></h2>
+            <div id="activity-list">
+                <ul>
+                {% for activity in activities %}
+                    <li><a href="{{ activity.get_network_link }}"><img src="{{ MEDIA_URL }}networks/{{ activity.get_source_display }}.gif" alt="{{ activity.get_source_display }}" /></a>{{ activity.get_activity_prefix}} {{ activity.title }}
+                        <span class="time"><a href="{{ activity.link }}">{{ activity.pub_date|timesince|upper }} AGO</a></span></li>
+                {% endfor %}
+                </ul>
+                <div class="indicator"><a href="{% url main_activity %}">More activity &#187;</a></div>
+            </div>
+  
         </div>
-        
-        <div id="middle">
-            <div class="content">
-                <table class="contentTable">
-                    <tbody>
-                    {% for item in shared_items %}
-                        <tr>
-                            <td><h3><a href="{{ item.link }}">{{ item.title|safe }}</a></h3>
-                                    <div class="bubble">
-                                        <blockquote>
-                                            <p>{{ item.comments|safe }}</p>
-                                        </blockquote>
-                                        <cite><a href="http://www.google.com/reader/shared/10780706687522073033">SHARED</a> {{ item.pub_date|timesince|upper }} AGO</cite>
-                                    </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                        <tr><td class="right"><a href="{% url main_shared_items %}">(View more shared items...)</a></td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-		<div id="bottom">
-            <div class="content">
-                <div id="activity">
-            {% for activity in activities %}
-                <p class="{{ activity.source }}">
-                    <a href="{{ activity.get_network_link }}"><img src="{{ MEDIA_URL }}networks/{{ activity.get_source_display }}.gif" alt="{{ activity.get_source_display }}" /></a>{{ activity.get_activity_prefix }}<a href="{{ activity.link }}">{{ activity.title }}</a>
-                <span class="time">{{ activity.pub_date|timesince|upper }} AGO</span></p>
-            {% endfor %}
-                <p class="right"><a href="{% url main_activity %}">(View more activity...)</a></p>
-                </div>
-            </div>
-		</div>
 {% endblock %}

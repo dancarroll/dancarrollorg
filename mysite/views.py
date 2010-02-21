@@ -6,9 +6,9 @@ import feedparser
 
 def index(request):
     return render_to_response('index.html',
-                {'blog_entries': Entry.objects.published()[:3], 
+                {'blog_entries': Entry.objects.published()[:2], 
                  'shared_items': SharedItem.objects.all()[:4],
-                 'activities': Activity.objects.published()[:10] },
+                 'activities': Activity.objects.published()[:5] },
                 context_instance=RequestContext(request))
 
 def activity(request):

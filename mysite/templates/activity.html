@@ -1,19 +1,20 @@
 {% extends "base.html" %}
-{% block title %} - what i'm up to{% endblock %}
-{% block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}page.css" />{% endblock %}
+{% block title %} | Activity{% endblock %}
 
 {% block content %}
-    <div id="page">
-        <div class="content">
-            <div id="post-title">what i'm up to</div>
-                <div id="activity">
-                {% for activity in activities %}
-                    {% ifchanged %}<h4>{{ activity.pub_date|date:"F j" }}</h4>{% endifchanged %}
-                    <p class="{{ activity.source }}">
-                        <a href="{{ activity.get_network_link }}"><img src="{{ MEDIA_URL }}networks/{{ activity.get_source_display }}.gif" alt="{{ activity.get_source_display }}" /></a>{{ activity.get_activity_prefix }}<a href="{{ activity.link }}">{{ activity.title }}</a>
-                    <span class="time">{{ activity.pub_date|timesince|upper }} AGO</span></p>
-                {% endfor %}
-                </div>
-        </div>
+    <div class="content">
+        {% for activity in activities %}
+            {% ifchanged activity.pub_date.date %}
+                {% if not forloop.first %}</ul></div>{% endif %}
+                
+                <h2 class="section-title">{{ activity.pub_date|date:"F j" }}</h2>
+                <div id="activity-list"><ul>
+            {% endifchanged %}
+            
+            <li><a href="{{ activity.get_network_link }}"><img src="{{ MEDIA_URL }}networks/{{ activity.get_source_display }}.gif" alt="{{ activity.get_source_display }}" /></a>{{ activity.get_activity_prefix}} {{ activity.title }}
+            <span class="time"><a href="{{ activity.link }}">{{ activity.pub_date|timesince|upper }} AGO</a></span></li>
+        
+        {% endfor %}
+        </ul></div>
     </div>
 {% endblock %}

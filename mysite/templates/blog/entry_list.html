@@ -1,31 +1,26 @@
 {% extends "base.html" %}
-{% block title %} - blog{% endblock %}
-{% block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}page.css" />{% endblock %}
+{% block title %} | Blog{% endblock %}
 
 {% block content %}
-    <div id="page">
-        <div class="content">
-            <div class="fleft leftContent">{% block contentTitle %}{% endblock %}
-            {% block entryList %}
+    <div id="content">
+        <h2 class="section-title"><a href="{% url blog_index %}">{% block contentTitle %}entries{% endblock %}</a></h2>
+        {% block entryList %}
+        <div id="entry-list">
+            {% if is_paginated and has_previous %}<div class="indicator"><a href="{% url blog_index_paginated previous %}">Newer entries &#187;</a></div>{% endif %}
+            
             {% for entry in object_list %}
-                {% if forloop.first and is_paginated and has_previous %}<a class="entryNav up" href="{% url blog_index_paginated previous %}" title="Newer entries">Newer entries</a>{% endif %}
-                <div class="entry">
-                    <div class="entryDate">{{ entry.pub_date|date:"M<\b\r />j<\b\r />Y"|safe }}</div>
-                    <div class="entryInfo">
-                        <h3 class="entryTitle"><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h3>
-                        <p class="entrySnip">{{ entry.snip }} <a href="{{ entry.get_absolute_url }}">(Read the rest of this entry...)</a></p>
-                    </div>
-                </div>
-                {% if forloop.last and is_paginated and has_next %}<a class="entryNav down" href="{% url blog_index_paginated next %}" title="Older entries">Older entries</a>{% endif %}
+                <h3><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a> <span class="time">POSTED {{ entry.pub_date|timesince|upper }} AGO</span></h3>
+                <p>{{ entry.snip }} <a href="{{ entry.get_absolute_url }}">(Read more...)</a></p>
             {% endfor %}
-            {% endblock %}
-            </div>
-        
-            <div class="fright rightContent">
-            {% load blog_extras %}{% render_month_links %}
-            <h3><a href="{% url blog_tag_list %}">Tags</a></h3>
-            <div class="smallerFont">{% render_tag_cloud %}</div>
-            </div>
+               
+            {% if is_paginated and has_next %}<div class="indicator"><a href="{% url blog_index_paginated next %}">Older entries &#187;</a></div>{% endif %}
         </div>
+        {% endblock %}
+        
+        <!--<div class="fright rightContent">
+        {% load blog_extras %}{% render_month_links %}
+        <h3><a href="{% url blog_tag_list %}">Tags</a></h3>
+        <div class="smallerFont">{% render_tag_cloud %}</div>
+        </div>-->
     </div>
 {% endblock %}
