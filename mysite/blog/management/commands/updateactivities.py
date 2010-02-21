@@ -11,10 +11,10 @@ import socket
 import datetime
 import feedparser
 
-try:
-    set
-except NameError:
-    from sets import Set as set   # Python 2.3 fallback
+#try:
+#    set
+#except NameError:
+#    from sets import Set as set   # Python 2.3 fallback
 
 class Command(NoArgsCommand):
     option_list = NoArgsCommand.option_list + (
@@ -101,7 +101,8 @@ class Command(NoArgsCommand):
                         title = entry.title.encode(parsed_feed.encoding, "xmlcharrefreplace")
                         guid = entry.get("id", entry.link).encode(parsed_feed.encoding, "xmlcharrefreplace")
                         link = entry.link.encode(parsed_feed.encoding, "xmlcharrefreplace")
-                        source = 1 # Google Reader is source choice 1
+                        source = u'GR' #1 # Google Reader is source choice 1
+                        public = True
                         
                         if not guid:
                             guid = link
@@ -122,13 +123,16 @@ class Command(NoArgsCommand):
                             date_published = datetime.datetime.now()
                             
                         try:
-                            SharedItem.objects.get(guid=guid)
-                        except SharedItem.DoesNotExist:
+                            #SharedItem.objects.get(guid=guid)
+                            Activity.objects.get(guid=guid)
+                        #except SharedItem.DoesNotExist:
+                        except Activity.DoesNotExist:
                             print "Created item: %s (%s)" % (title, link)
                             added_item_list.append("Created item: %s (%s)\n" % (title, link))
                             added_item_list.append("  With comment: %s\n\n" % comments)
                             try:
-                                SharedItem.objects.create(title=title, link=link, source=source, comments=comments, shared_by=shared_by, pub_date=date_published, guid=guid)
+                                #SharedItem.objects.create(title=title, link=link, source=source, comments=comments, shared_by=shared_by, pub_date=date_published, guid=guid)
+                                Activity.objects.create(title=title, link=link, source=source, username=shared_by, author=shared_by, comments=comments, pub_date=date_published, published=public, guid=guid)
                             except:
                                 print "Unexpected error in Google Reader:", sys.exc_info()[0]
                                 added_item_list.append("Unexpected error in Google Reader: %s\n\n" % sys.exc_info()[0])

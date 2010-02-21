@@ -101,6 +101,7 @@ class Activity(models.Model):
         ('FB', 'facebook'),
         ('HU', 'hulu'),
         ('RD', 'reddit'),
+        ('GR', 'googlereader'),
     )
     
     title = models.CharField('title', max_length=200)
@@ -108,6 +109,7 @@ class Activity(models.Model):
     source = models.CharField(max_length=2, choices=SOURCE_CHOICES)
     username = models.CharField(max_length=20, blank=True)
     author = models.CharField(max_length=20, blank=True)
+    comments = models.TextField(blank=True)
     pub_date = models.DateTimeField('Date published')
     published = models.BooleanField(default=True)
     guid = models.CharField(max_length=255, unique=True, db_index=True)
@@ -132,6 +134,8 @@ class Activity(models.Model):
             return u'Watched '
         elif self.source == 'RD':
             return u'Liked '
+        elif self.source == 'GR':
+            return u'Shared '
         else:
             return u''
     
@@ -148,3 +152,6 @@ class Activity(models.Model):
             return u"http://www.hulu.com/profiles/erunama/"
         elif self.source == 'RD':
             return u"http://www.reddit.com/user/erunama/"
+        elif self.source == 'GR':
+            return u"http://www.google.com/reader/shared/dancarroll"
+            

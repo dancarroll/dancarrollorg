@@ -1,14 +1,9 @@
 {% extends "base.html" %}
-{% block title %} - {{ flatpage.title|lower }}{% endblock %}
-{% block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}page.css" />{% endblock %}
+{% block title %} | {{ flatpage.title }}{% endblock %}
 
 {% block content %}
-    <div id="page">
-        <div class="content">
-            <div id="flatpage">
-            <div id="flatpage-title">{{ flatpage.title|lower }}</div>
-            <!--<div id="flatpage-content">-->{{ flatpage.content }}<!--</div>-->
-            </div>
-        </div>
+    <div id="content">
+        <h2 class="section-title">{{ flatpage.title|lower }}</h2>
+        {{ flatpage.content }}
     </div>
 {% endblock %}
