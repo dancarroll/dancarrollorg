@@ -1,15 +1,9 @@
-/* @override http://localhost:8080/media/css/aal.css */
 /* 
   aardvark.legs by Anatoli Papirovski - http://fecklessmind.com/
   Licensed under the MIT license. http://www.opensource.org/licenses/mit-license.php
-*/
+  
+  used for erunama.com, based of a slightly modified version by Steve Losh (stevelosh.com)
 
-/*
-  edited for stevelosh.com by Steve Losh
-  changes:
-    base font-size was changed to 14px
-
-/* 
   Reset first. Modified version of Eric Meyer and Paul Chaplin reset 
   from http://meyerweb.com/eric/tools/css/reset/ 
 */
