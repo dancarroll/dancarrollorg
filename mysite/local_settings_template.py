@@ -34,7 +34,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'mysite.polls',
     'mysite.blog',
     'tagging',
     'django.contrib.admin',
