@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} - words by others{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}page.css" />{% endblock %}
+
+{% block content %}
+    <div id="page">
+        <div class="content">
+            <div id="post-title">words by others</div>
+            <table class="contentTable">
+                <tbody>
+                {% for item in shared_items %}
+                    {% ifchanged %}<tr><td><h4 class="right">{{ item.pub_date|date:"F j" }}</h4></td></tr>{% endifchanged %}
+                    <tr>
+                        <td><h3><a href="{{ item.link }}">{{ item.title|safe }}</a></h3>
+                                <div class="bubble">
+                                    <blockquote>
+                                        <p>{{ item.comments|safe }}</p>
+                                    </blockquote>
+                                    <cite><a href="http://www.google.com/reader/shared/10780706687522073033">SHARED</a> AT {{ item.pub_date|date:"P"|upper }}</cite>
+                                </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

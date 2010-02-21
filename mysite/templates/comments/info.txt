@@ -1,0 +1,6 @@
+Copied from django installation: Lib\site-packages\django\contrib\comments\templates\comments
+
+Modified "next" input to point to object's (blog entry) URL:
+<input type="hidden" name="next" value="{{ object.get_absolute_url }}" />
+
+Removed "Preview" button

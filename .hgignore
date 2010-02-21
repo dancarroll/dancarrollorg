@@ -1,0 +1,6 @@
+syntax: glob
+
+.svn
+*.pyc
+local_settings.py
+deploy_settings.py

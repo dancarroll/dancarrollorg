@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>erunama.com{% block title %}{% endblock %}</title>
+	<link rel="alternate" type="application/rss+xml" title="Erunama.com RSS Feed" href="/feeds/latest" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}style.css" />
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+	<div id="container">
+        {% block header %}
+		<div id="header">
+            <div class="content">
+                <a class="logo" href="/">
+                    <img height="20" width="256" alt="erunama.com" src="{{ MEDIA_URL }}erunamaHeader.jpg" />
+                </a>
+                <ul id="topnav">
+                    <li id="nav-blog">
+                        <a href="/blog/">Blog</a>
+                    </li>
+                    <li id="nav-projects">
+                        <a href="/projects/">Projects</a>
+                    </li>
+                    <li id="nav-about">
+                        <a href="/about/">About</a>
+                    </li>
+                    <li id="nav-contact">
+                        <a href="/contact/">Contact</a>
+                    </li>
+                    <li id="nav-rss">
+                        <a href="/feeds/latest/"><img height="16" width="16" alt="Subscribe to my RSS feed" src="{{ MEDIA_URL }}feedIcon.gif" /></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% endblock %}
+        
+        {% block content %}
+        {% endblock %}
+        
+        {% block footer %}
+        <div id="footer">
+            <div class="content">
+                <p id="copyright"><strong>&copy; 2010 Daniel J. Carroll</strong><br />
+                   Views expressed are not necessarily those of my employer</p>
+            </div>
+        </div>
+        {% endblock %}
+	</div>
+
+</body>
+</html>
