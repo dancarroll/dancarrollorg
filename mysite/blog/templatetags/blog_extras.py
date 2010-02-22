@@ -15,3 +15,9 @@ def render_tag_cloud():
     return {
         'tag_cloud': Tag.objects.cloud_for_model(Entry, steps=3, filters=dict(published=True)),
     }
+
+@register.inclusion_tag('blog/tag_list_tag.html')
+def render_tag_links():
+    return {
+        'tag_list': Tag.objects.usage_for_queryset(Entry.objects.published()),
+    }

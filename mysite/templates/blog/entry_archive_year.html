@@ -1,9 +1,4 @@
-<h1>Entry archive for year {{ year }}</h1>
+{% extends "blog/entry_list.html" %}
+{% block title %} | Blog | {{ year }}{% endblock %}
 
-{% if object_list %}
-    <ul>
-    {% for object in object_list %}
-        <li><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></li>
-    {% endfor %}
-    </ul>
-{% endif %}
+{% block contentTitle %}Yearly archive for {{ year }}{% endblock %}

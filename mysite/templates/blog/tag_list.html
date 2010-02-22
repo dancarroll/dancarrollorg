@@ -1,7 +1,7 @@
 {% extends "blog/entry_list.html" %}
-{% block title %} - tags{% endblock %}
+{% block title %} | Blog | Tag cloud{% endblock %}
 
-{% block contentTitle %}<h2>Tag cloud</h2>{% endblock %}
+{% block contentTitle %}Tag cloud{% endblock %}
 {% block entryList %}
     {% load blog_extras %}{% render_tag_cloud %}
 {% endblock %}

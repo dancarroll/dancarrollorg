@@ -114,11 +114,11 @@ blockquote {
 }
 blockquote p:last-child { margin-bottom: 0; }
 
-h2.section-title {
+.section-title {
 	margin-bottom: 0;
 	border-bottom: 1px solid #30403B;
 }
-h2.section-title a {
+.section-title a {
     color: #BFBF8A;
 }
 
@@ -189,6 +189,20 @@ div#page p + p { text-indent:1.625em;}
 
 div#page p img       { float: left; margin: 0.5em 0.8125em 0.8125em 0; padding: 0; }
 div#page p img.right { float: right; margin: 0.5em  0 0.8125em 0.8125em }
+
+.leftContent {
+    width: 40em;
+}
+.rightContent {
+    width: 14em;
+}
+
+#sidebar p {
+    margin: 0;
+}
+#sidebar h3.section-title {
+
+}
 
 .fRight {
     float: right;
