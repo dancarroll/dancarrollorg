@@ -57,7 +57,7 @@ class Entry(models.Model):
     def get_absolute_url(self):
         return ('blog_entry_detail', None, {
                 'year': self.pub_date.year,
-                'month': self.pub_date.strftime('%b'),
+                'month': self.pub_date.month,
                 'day': self.pub_date.day,
                 'slug': self.slug
             })

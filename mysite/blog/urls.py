@@ -3,15 +3,11 @@ from mysite.blog.models import Entry, Category
 from mysite.blog import views as blog_views
 
 urlpatterns = patterns('',
-    url(r'^(?P<year>\d{4})/(?P<month>\w{3})/(?P<day>\d{1,2})/(?P<slug>[-\w]+)/$',
+    url(r'^(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/(?P<slug>[-\w]+)/$',
         view=blog_views.blog_entry_detail,
         name='blog_entry_detail'),
 
-    url(r'^(?P<year>\d{4})/(?P<month>\w{3})/(?P<day>\d{1,2})/$',
-        view=blog_views.blog_archive_day,
-        name='blog_archive_day'),
-
-    url(r'^(?P<year>\d{4})/(?P<month>\w{3})/$',
+    url(r'^(?P<year>\d{4})/(?P<month>\d{1,2})/$',
         view=blog_views.blog_archive_month,
         name='blog_archive_month'),
 

@@ -37,6 +37,7 @@ def blog_archive_month(request, year, month, **kwargs):
         year = year,
         month = month,
         date_field = 'pub_date',
+        month_format = "%m",
         queryset = Entry.objects.published(),
         **kwargs
     )
@@ -64,6 +65,7 @@ def blog_entry_detail(request, slug, year, month, day, **kwargs):
         day = day,
         date_field = 'pub_date',
         slug = slug,
+        month_format = "%m",
         queryset = Entry.objects.all(), # Use objects.all() to be able to check posts before they are officially published
         **kwargs
     )
