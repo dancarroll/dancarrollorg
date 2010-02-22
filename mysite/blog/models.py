@@ -6,24 +6,6 @@ from tagging.fields import TagField
 import datetime
 import tagging
 
-class Category(models.Model):
-    """Category model"""
-    title = models.CharField('title', max_length=100)
-    slug = models.SlugField('slug', unique=True)
-    
-    class Meta:
-        verbose_name = 'category'
-        verbose_name_plural = 'categories'
-        db_table = 'blog_categories'
-        ordering = ('title',)
-        
-    def __unicode__(self):
-        return u'%s' % self.title
-        
-    @models.permalink
-    def get_absolute_url(self):
-        return ('blog_category_detail', None, {'slug': self.slug})
-
 class Entry(models.Model):
     title = models.CharField('title', max_length=200)
     snip = models.CharField('snip', max_length=500)
@@ -36,7 +18,6 @@ class Entry(models.Model):
                                     auto_now=True)
     
     tags = TagField()
-    categories = models.ManyToManyField(Category, blank=True)
     body = models.TextField()
     published = models.BooleanField(default=False)
     allow_comments = models.BooleanField(default=True)
@@ -57,7 +38,7 @@ class Entry(models.Model):
     def get_absolute_url(self):
         return ('blog_entry_detail', None, {
                 'year': self.pub_date.year,
-                'month': self.pub_date.month,
+                'month': self.pub_date.strftime("%m"),
                 'day': self.pub_date.day,
                 'slug': self.slug
             })

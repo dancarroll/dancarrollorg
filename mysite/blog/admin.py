@@ -1,12 +1,6 @@
 # Polls application admin page
-from mysite.blog.models import Entry, Category, SharedItem, Activity
+from mysite.blog.models import Entry, SharedItem, Activity
 from django.contrib import admin
-
-class CategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('title',)}
-
-admin.site.register(Category, CategoryAdmin)
-
 
 class EntryAdmin(admin.ModelAdmin):
     # fieldsets = [
@@ -14,7 +8,7 @@ class EntryAdmin(admin.ModelAdmin):
         # ('Date information',  {'fields': ['pub_date'], 'classes': ['collapse']}),
     # ]
     list_display = ('title', 'pub_date', 'published')
-    list_filter = ['pub_date', 'categories', 'published']
+    list_filter = ['pub_date', 'published']
     search_fields = ['title', 'body']
     date_hierarchy = 'pub_date'
     prepopulated_fields = {'slug': ('title',)}

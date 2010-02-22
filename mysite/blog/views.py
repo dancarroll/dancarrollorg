@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import Http404
 from django.views.generic import date_based, list_detail, simple
-from mysite.blog.models import Entry, Category
+from mysite.blog.models import Entry
 from tagging.views import tagged_object_list
 
 import datetime
@@ -44,19 +44,6 @@ def blog_archive_month(request, year, month, **kwargs):
 blog_archive_month.__doc__ = date_based.archive_month.__doc__
 
 
-def blog_archive_day(request, year, month, day, **kwargs):
-    return date_based.archive_day(
-        request,
-        year = year,
-        month = month,
-        day = day,
-        date_field = 'pub_date',
-        queryset = Entry.objects.published(),
-        **kwargs
-    )
-blog_archive_day.__doc__ = date_based.archive_day.__doc__
-
-
 def blog_entry_detail(request, slug, year, month, day, **kwargs):
     return date_based.object_detail(
         request,
@@ -71,21 +58,6 @@ def blog_entry_detail(request, slug, year, month, day, **kwargs):
     )
 blog_entry_detail.__doc__ = date_based.object_detail.__doc__
 
-# def category_list(request, template_name = 'blog/category_list.html', **kwargs):
-    # """
-    # Category list
-
-    # Template: ``blog/category_list.html``
-    # Context:
-        # object_list
-            # List of categories.
-    # """
-    # return list_detail.object_list(
-        # request,
-        # queryset = Category.objects.all(),
-        # template_name = template_name,
-        # **kwargs
-    # )
 
 def tag_list(request, template_name = 'blog/tag_list.html', **kwargs):
     """
@@ -110,27 +82,6 @@ def tag_detail(request, slug, template_name = 'blog/tag_detail.html', **kwargs):
         **kwargs
     )
 tag_detail.__doc__ = tagged_object_list.__doc__
-
-# def category_detail(request, slug, template_name = 'blog/category_detail.html', **kwargs):
-    # """
-    # Category detail
-
-    # Template: ``blog/category_detail.html``
-    # Context:
-        # object_list
-            # List of entries specific to the given category.
-        # category
-            # Given category.
-    # """
-    # category = get_object_or_404(Category, slug__iexact=slug)
-
-    # return list_detail.object_list(
-        # request,
-        # queryset = category.entry_set.published(),
-        # extra_context = {'category': category},
-        # template_name = template_name,
-        # **kwargs
-    # )
 
 
 # Stop Words courtesy of http://www.dcs.gla.ac.uk/idom/ir_resources/linguistic_utils/stop_words
