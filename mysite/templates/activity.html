@@ -11,7 +11,7 @@
                 <div id="activity-list"><ul>
             {% endifchanged %}
             
-            <li><a href="{{ activity.get_network_link }}"><img src="{{ MEDIA_URL }}networks/{{ activity.get_source_display }}.gif" alt="{{ activity.get_source_display }}" /></a>{{ activity.get_activity_prefix}} {{ activity.title }}
+            <li><a href="{{ activity.get_network_link }}"><img src="{{ MEDIA_URL }}networks/{{ activity.get_source_display }}.png" alt="{{ activity.get_source_display }}" /></a>{{ activity.get_activity_prefix}} {{ activity.title }}
             <span class="time"><a href="{{ activity.link }}">{{ activity.pub_date|timesince|upper }} AGO</a></span></li>
         
         {% endfor %}
