@@ -44,19 +44,31 @@ def blog_archive_month(request, year, month, **kwargs):
 blog_archive_month.__doc__ = date_based.archive_month.__doc__
 
 
-def blog_entry_detail(request, slug, year, month, day, **kwargs):
-    return date_based.object_detail(
-        request,
-        year = year,
-        month = month,
-        day = day,
-        date_field = 'pub_date',
+#def blog_entry_detail(request, slug, year, month, day, **kwargs):
+#    return date_based.object_detail(
+#        request,
+#        year = year,
+#        month = month,
+#        day = day,
+#        date_field = 'pub_date',
+#        slug = slug,
+#        month_format = "%m",
+#        queryset = Entry.objects.all(), # Use objects.all() to be able to check posts before they are officially published
+#        **kwargs
+#    )
+#blog_entry_detail.__doc__ = date_based.object_detail.__doc__
+def blog_entry_detail(request, slug, year, month, template_name="blog/entry_detail.html"):
+    entry = Entry.objects.filter(
         slug = slug,
-        month_format = "%m",
-        queryset = Entry.objects.all(), # Use objects.all() to be able to check posts before they are officially published
-        **kwargs
+        pub_date__year = int(year),
+        pub_date__month = int(month),
     )
-blog_entry_detail.__doc__ = date_based.object_detail.__doc__
+    if not entry:
+        raise Http404
+    
+    return render_to_response(template_name,
+        {"object": entry[0],},
+        context_instance=RequestContext(request))
 
 
 def tag_list(request, template_name = 'blog/tag_list.html', **kwargs):

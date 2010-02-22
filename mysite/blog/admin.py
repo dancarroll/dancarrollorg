@@ -1,12 +1,8 @@
-# Polls application admin page
+# Blog application admin page
 from mysite.blog.models import Entry, SharedItem, Activity
 from django.contrib import admin
 
 class EntryAdmin(admin.ModelAdmin):
-    # fieldsets = [
-        # ('Title',	            {'fields': ['title']}),
-        # ('Date information',  {'fields': ['pub_date'], 'classes': ['collapse']}),
-    # ]
     list_display = ('title', 'pub_date', 'published')
     list_filter = ['pub_date', 'published']
     search_fields = ['title', 'body']

@@ -3,8 +3,7 @@ from mysite.blog.models import Entry
 from mysite.blog import views as blog_views
 
 urlpatterns = patterns('',
-    url(r'^(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{1,2})/(?P<slug>[-\w]+)/$',
-    #url(r'^(?P<year>\d{4})/(?P<month>\d{2})/(?P<slug>[-\w]+)/$',
+    url(r'^(?P<year>\d{4})/(?P<month>\d{2})/(?P<slug>[-\w]+)/$',
         view=blog_views.blog_entry_detail,
         name='blog_entry_detail'),
 

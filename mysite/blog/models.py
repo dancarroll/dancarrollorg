@@ -39,7 +39,6 @@ class Entry(models.Model):
         return ('blog_entry_detail', None, {
                 'year': self.pub_date.year,
                 'month': self.pub_date.strftime("%m"),
-                'day': self.pub_date.day,
                 'slug': self.slug
             })
     
