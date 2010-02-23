@@ -24,12 +24,12 @@ ADMIN_MEDIA_PREFIX = 'http://127.0.0.1:8000/admin-media/'
 SECRET_KEY = 'itisasecret'
 
 MIDDLEWARE_CLASSES = (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 TEMPLATE_DIRS = (

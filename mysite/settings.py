@@ -67,12 +67,12 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    #'debug_toolbar.middleware.DebugToolbarMiddleware', # will add this to local_settings.py (needs to be after any encoding middleware)
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware', # will add this to local_settings.py
 )
 
 ROOT_URLCONF = 'mysite.urls'
