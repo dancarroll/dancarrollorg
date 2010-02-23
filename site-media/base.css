@@ -42,7 +42,8 @@ div#header h1 {
 	line-height: 1.2em;
 }
 #navbar li {
-	float: left; }
+	float: left;
+}
 
 a {
   text-decoration: none;
@@ -133,17 +134,16 @@ div#entry-list p {
     color: #8B9976;
 }
 
-div.indicator {
-    text-align: right;
-}
-
 div#activity-list {
   font-size: 1em;
   line-height: 1em;
   margin-left: 0em;
-  color: #8B9976;
+  color: #30403B;
   /*border-top: 1px solid #30403B;*/
   padding-top: 1em;
+}
+div#activity-list ul a {
+color: #8B9976;
 }
 div#activity-list ul { list-style: none; }
 div#activity-list ul li {
@@ -159,6 +159,10 @@ div#activity-list ul li span.time {
   margin-left: 0.5em;
   font-weight: normal;
   color: #30403B;
+}
+
+div.indicator {
+    text-align: right;
 }
 
 span.time {
@@ -200,8 +204,11 @@ div#page p img.right { float: right; margin: 0.5em  0 0.8125em 0.8125em }
 #sidebar p {
     margin: 0;
 }
-#sidebar h3.section-title {
-
+#sidebar ul {
+    list-style: none;
+}
+#sidebar ul li {
+    margin: 0;
 }
 
 .fRight {

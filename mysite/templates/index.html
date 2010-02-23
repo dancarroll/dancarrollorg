@@ -17,8 +17,8 @@
             <div id="activity-list">
                 <ul>
                 {% for activity in activities %}
-                    <li><a href="{{ activity.get_network_link }}"><img src="{{ MEDIA_URL }}networks/{{ activity.get_source_display }}.png" alt="{{ activity.get_source_display }}" /></a>{{ activity.get_activity_prefix}} {{ activity.title }}
-                        <span class="time"><a href="{{ activity.link }}">{{ activity.pub_date|timesince|upper }} AGO</a></span></li>
+                    <li><a href="{{ activity.get_network_link }}"><img src="{{ MEDIA_URL }}networks/{{ activity.get_source_display }}.png" alt="{{ activity.get_source_display }}" /></a>{{ activity.get_activity_prefix}} <a href="{{ activity.link }}">{{ activity.title }}</a>
+                        <span class="time">{{ activity.pub_date|timesince|upper }} AGO</span></li>
                 {% endfor %}
                 </ul>
                 <div class="indicator"><a href="{% url main_activity %}">More activity &#187;</a></div>
