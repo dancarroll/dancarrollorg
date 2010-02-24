@@ -2,31 +2,27 @@
 {% block title %} | Blog{% endblock %}
 
 {% block content %}
-    <div id="content">
-        <div id="sidebar" class="fRight rightContent">
-            <h3 class="section-title"><a href="{% url blog_index %}">Entry archive</a></h3>
-            {% load blog_extras %}{% render_month_links %}
-            <p />
-            <h3 class="section-title"><a href="{% url blog_tag_list %}">Tags</a></h3>
-            <div class="smallerFont">{% render_tag_links %}</div>
-        </div>
+    <div id="sidebar" class="fRight rightContent">
+        <h3 class="section-title"><a href="{% url blog_index %}">Entry archive</a></h3>
+        {% load blog_extras %}{% render_month_links %}
         
-        <div class="leftContent">
-            <h2 class="section-title"><a href="{% url blog_index %}">{% block contentTitle %}entries{% endblock %}</a></h2>
-            {% block entryList %}
-            <div id="entry-list">
-                {% if is_paginated and has_previous %}<div class="indicator"><a href="{% url blog_index_paginated previous %}">Newer entries &#187;</a></div>{% endif %}
-                
-                {% for entry in object_list %}
-                    <h3><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a> <span class="time">POSTED {{ entry.pub_date|timesince|upper }} AGO</span></h3>
-                    <p>{{ entry.snip }} <a href="{{ entry.get_absolute_url }}">(Read more...)</a></p>
-                {% endfor %}
-                   
-                {% if is_paginated and has_next %}<div class="indicator"><a href="{% url blog_index_paginated next %}">Older entries &#187;</a></div>{% endif %}
-            </div>
-            {% endblock %}
+        <h3 class="section-title"><a href="{% url blog_tag_list %}">Tags</a></h3>
+        {% render_all_tag_links %}
+    </div>
+    
+    <div class="leftContent">
+        <h2 class="section-title"><a href="{% url blog_index %}">{% block contentTitle %}entries{% endblock %}</a></h2>
+        {% block entryList %}
+        <div id="entry-list">
+            {% if is_paginated and has_previous %}<div class="indicator"><a href="{% url blog_index_paginated previous %}">Newer entries &#187;</a></div>{% endif %}
+            
+            {% for entry in object_list %}
+                <h3><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a> <span class="time">POSTED {{ entry.pub_date|timesince|upper }} AGO</span></h3>
+                <p>{{ entry.snip }} <a href="{{ entry.get_absolute_url }}">(Read more...)</a></p>
+            {% endfor %}
+               
+            {% if is_paginated and has_next %}<div class="indicator"><a href="{% url blog_index_paginated next %}">Older entries &#187;</a></div>{% endif %}
         </div>
-        
-
+        {% endblock %}
     </div>
 {% endblock %}

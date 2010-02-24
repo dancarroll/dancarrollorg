@@ -139,7 +139,6 @@ div#activity-list {
   line-height: 1em;
   margin-left: 0em;
   color: #30403B;
-  /*border-top: 1px solid #30403B;*/
   padding-top: 1em;
 }
 div#activity-list ul a {
@@ -179,20 +178,19 @@ span.time a:hover {
   color: #30403B;
 }
 
-div#page { font:1em/1.625em "lucida grande","lucida sans unicode", sans-serif;  
-font-size-adjust:none;
-font-style:normal;
-font-variant:normal;
-font-weight:normal;
-width: 40em;
+div#entry-body { font:1em/1.625em "lucida grande","lucida sans unicode", sans-serif;  
+    font-size-adjust:none;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
 }
 
-div#page p { padding:0 0 0.8125em 0; font-weight:300;}
+div#entry-body p { padding:0 0 0.8125em 0; font-weight:300; margin: 0;}
 
-div#page p + p { text-indent:1.625em;}
+div#entry-body p + p { text-indent:1.625em;}
 
-div#page p img       { float: left; margin: 0.5em 0.8125em 0.8125em 0; padding: 0; }
-div#page p img.right { float: right; margin: 0.5em  0 0.8125em 0.8125em }
+div#entry-body p img       { float: left; margin: 0.5em 0.8125em 0.8125em 0; padding: 0; }
+div#entry-body p img.right { float: right; margin: 0.5em  0 0.8125em 0.8125em }
 
 .leftContent {
     width: 40em;

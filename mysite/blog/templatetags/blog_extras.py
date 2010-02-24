@@ -17,7 +17,13 @@ def render_tag_cloud():
     }
 
 @register.inclusion_tag('blog/tag_list_tag.html')
-def render_tag_links():
+def render_all_tag_links():
     return {
         'tag_list': Tag.objects.usage_for_queryset(Entry.objects.published()),
+    }
+
+@register.inclusion_tag('blog/tag_list_tag.html')
+def render_tag_links_for_object(entry):
+    return {
+        'tag_list': Tag.objects.get_for_object(entry),
     }
