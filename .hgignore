@@ -3,4 +3,5 @@ syntax: glob
 .svn
 *.pyc
 local_settings.py
-deploy_settings.py
+local_settings.development.py
+local_settings.production.py
