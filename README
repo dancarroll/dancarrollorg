@@ -1,0 +1,4 @@
+
+
+Generate code sample HTML with:
+pygmentize -O style=native -f html -l <LANGUAGE, i.e. python, or blank> -o <OUTPUT.html> <INPUT, i.e.:models.py>
