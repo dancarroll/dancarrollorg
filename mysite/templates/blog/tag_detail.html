@@ -1,4 +1,4 @@
 {% extends "blog/entry_list.html" %}
 {% block title %} | Blog | {{ tag.name }}{% endblock %}
 
-{% block contentTitle %}Entries tagged with "{{ tag.name }}"{% endblock %}
+{% block contentTitle %}<a href="{% url blog_tag_detail tag.name %}">Entries tagged with "{{ tag.name }}"</a>{% endblock %}

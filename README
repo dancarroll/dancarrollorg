@@ -2,3 +2,15 @@
 
 Generate code sample HTML with:
 pygmentize -O style=native -f html -l <LANGUAGE, i.e. python, or blank> -o <OUTPUT.html> <INPUT, i.e.:models.py>
+
+
+Website color scheme:
+---------------------
+http://kuler.adobe.com/#themeID/748381
+scheme name: shy
+
+dark blue: 121C26
+grey: 30403B
+light grey: 8B9976
+beige: BFBF8A
+orange: 8C4119

@@ -49,3 +49,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'debug_toolbar',
 )
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}

@@ -11,7 +11,7 @@
     </div>
     
     <div class="leftContent">
-        <h2 class="section-title"><a href="{% url blog_index %}">{% block contentTitle %}entries{% endblock %}</a></h2>
+        <h2 class="section-title">{% block contentTitle %}<a href="{% url blog_index %}">entries</a>{% endblock %}</h2>
         {% block entryList %}
         <div id="entry-list">
             {% if is_paginated and has_previous %}<div class="indicator"><a href="{% url blog_index_paginated previous %}">Newer entries &#187;</a></div>{% endif %}

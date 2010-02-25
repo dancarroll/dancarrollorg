@@ -23,9 +23,9 @@ urlpatterns = patterns('',
         view=blog_views.tag_list,
         name='blog_tag_list'),
 
-    url (r'^search/$',
-        view=blog_views.search,
-        name='blog_search'),
+    #url (r'^search/$',
+    #    view=blog_views.search,
+    #    name='blog_search'),
 
     url(r'^page/(?P<page>\w)/$',
         view=blog_views.blog_entry_list,
