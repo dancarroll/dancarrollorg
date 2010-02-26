@@ -1,14 +1,9 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
-from mysite.blog.feeds import LatestEntries
+from mysite.blog.feeds import LatestEntriesFeed, LatestEntriesByTagFeed
 
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
-
-feeds = {
-	'latest': LatestEntries,
-}
 
 urlpatterns = patterns('',
     # Example:
@@ -24,7 +19,11 @@ urlpatterns = patterns('',
     url(r'^activity/$', view='mysite.views.activity', name='main_activity'),
     (r'^blog/', include('mysite.blog.urls')),
     url(r'^shared/$', view='mysite.views.shared_items', name='main_shared_items'),
-	(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+    
+    # RSS feeds
+	url(r'^feeds/latest/$', view=LatestEntriesFeed(), name='blog_entries_rss'),
+    url(r'^feeds/tags/(?P<tag_name>[-\w]+)/$', view=LatestEntriesByTagFeed(), name='blog_tagged_rss'),
+    
     #url(r'^$', view='mysite.views.index', name='main_index'),
     url(r'^test/$', view='mysite.views.index', name='main_index'),
 )
