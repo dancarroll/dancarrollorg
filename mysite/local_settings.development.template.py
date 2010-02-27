@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'tagging',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'django.contrib.sitemaps',
     'debug_toolbar',
 )
 

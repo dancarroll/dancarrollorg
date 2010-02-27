@@ -1,9 +1,18 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
+from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
 from mysite.blog.feeds import LatestEntriesFeed, LatestEntriesByTagFeed
+from mysite.blog.models import Entry
+from mysite.sitemaps import SectionSitemap
 
 from django.contrib import admin
 admin.autodiscover()
+
+sitemaps = {
+    'sections': SectionSitemap,
+    'flatpages': FlatPageSitemap,
+    'blog': GenericSitemap({'queryset': Entry.objects.published(), 'date_field': 'pub_date',}),
+}
 
 urlpatterns = patterns('',
     # Example:
@@ -21,8 +30,11 @@ urlpatterns = patterns('',
     url(r'^shared/$', view='mysite.views.shared_items', name='main_shared_items'),
     
     # RSS feeds
-	url(r'^feeds/latest/$', view=LatestEntriesFeed(), name='blog_entries_rss'),
+    url(r'^feeds/latest/$', view=LatestEntriesFeed(), name='blog_entries_rss'),
     url(r'^feeds/tags/(?P<tag_name>[-\w]+)/$', view=LatestEntriesByTagFeed(), name='blog_tagged_rss'),
+    
+    # Sitemap
+    (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     
     #url(r'^$', view='mysite.views.index', name='main_index'),
     url(r'^test/$', view='mysite.views.index', name='main_index'),
