@@ -11,7 +11,7 @@ admin.autodiscover()
 sitemaps = {
     'sections': SectionSitemap,
     'flatpages': FlatPageSitemap,
-    'blog': GenericSitemap({'queryset': Entry.objects.published(), 'date_field': 'pub_date',}),
+    'blog': GenericSitemap({'queryset': Entry.objects.published(), 'date_field': 'mod_date',}),
 }
 
 urlpatterns = patterns('',

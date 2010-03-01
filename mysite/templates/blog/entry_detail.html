@@ -16,9 +16,13 @@
             {{ object.body|safe }}
         </div>
     </div>
-    
-    {% load disqus_tags %}
-    {% disqus_dev %}
-    {% disqus_show_comments %}
+
+    {% if object.allow_comments %}
+        {% load disqus_tags %}
+        {% disqus_dev %}
+        {% disqus_show_comments %}
+    {% else %}
+        <h3>Comments have been closed for this entry.</h3>
+    {% endif %}
     
 {% endblock %}
