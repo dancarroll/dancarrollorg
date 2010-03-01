@@ -60,6 +60,11 @@ ADMIN_MEDIA_PREFIX = '/media/admin/'
 # This should be defined in the local_settings.py file
 # SECRET_KEY = ''
 
+# These should be the API key (http://disqus.com/api/get_my_key/) and website
+# shortname from your DISQUS account.
+# DISQUS_API_KEY = ''
+# DISQUS_WEBSITE_SHORTNAME = ''
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
@@ -92,18 +97,19 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 INSTALLED_APPS = (
     'django.contrib.auth',
-    'django.contrib.comments',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.flatpages',
     'mysite.blog',
+    'disqus',
     'tagging',
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
     #'debug_toolbar', # will add this to local_settings.py if needed
 )
+
 
 try:
     from local_settings import *

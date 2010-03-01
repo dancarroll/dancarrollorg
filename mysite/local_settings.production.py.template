@@ -25,6 +25,11 @@ ADMIN_MEDIA_PREFIX = '/media/admin/'
 
 SECRET_KEY = 'itisasecret'
 
+# These should be the API key (http://disqus.com/api/get_my_key/) and website
+# shortname from your DISQUS account.
+DISQUS_API_KEY = 'thisisanothersecret'
+DISQUS_WEBSITE_SHORTNAME = ''
+
 TEMPLATE_DIRS = (
     "",
 )

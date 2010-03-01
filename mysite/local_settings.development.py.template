@@ -23,6 +23,11 @@ ADMIN_MEDIA_PREFIX = 'http://127.0.0.1:8000/admin-media/'
 
 SECRET_KEY = 'itisasecret'
 
+# These should be the API key (http://disqus.com/api/get_my_key/) and website
+# shortname from your DISQUS account.
+DISQUS_API_KEY = 'thisisanothersecret'
+DISQUS_WEBSITE_SHORTNAME = ''
+
 MIDDLEWARE_CLASSES = (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -38,12 +43,12 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'django.contrib.auth',
-    'django.contrib.comments',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.flatpages',
     'mysite.blog',
+    'disqus',
     'tagging',
     'django.contrib.admin',
     'django.contrib.admindocs',

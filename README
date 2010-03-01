@@ -1,5 +1,4 @@
 
-
 Generate code sample HTML with:
 pygmentize -O style=native -f html -l <LANGUAGE, i.e. python, or blank> -o <OUTPUT.html> <INPUT, i.e.:models.py>
 
@@ -21,3 +20,9 @@ Special thanks to:
 Social network icons courtesy of Komodo Media
 http://www.komodomedia.com/download/
 Social Network Icon Pack by Rogie King is licensed under a Creative Commons Attribution-Share Alike 3.0 Unported License (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+
+Components used:
+----------------
+django-tagging
+feedparser
+django-disqus
