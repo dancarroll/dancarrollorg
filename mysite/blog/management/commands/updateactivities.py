@@ -74,10 +74,10 @@ class Command(NoArgsCommand):
             
             # HULU
             # http://www.hulu.com/feed/history/erunama
-            added_item_list.append("\nHULU\n\n")
-            for facebookItem in self.add_network_items(u'HU', u'erunama', None, "http://www.hulu.com/feed/history/erunama"):
-                items_added = True
-                added_item_list.append(facebookItem)
+            #added_item_list.append("\nHULU\n\n")
+            #for facebookItem in self.add_network_items(u'HU', u'erunama', None, "http://www.hulu.com/feed/history/erunama"):
+            #    items_added = True
+            #    added_item_list.append(facebookItem)
             
             
         except:
@@ -86,7 +86,14 @@ class Command(NoArgsCommand):
             added_item_list.append("Unexpected error: %s\n\n" % sys.exc_info()[0])    
         finally:
             if items_added:
-                mail_admins('Update Activities command completed', ''.join(added_item_list), fail_silently=False)
+                mailBody = u""
+                for itemString in added_item_list:
+                    try:
+                        mailBody = mailBody.encode('utf-8') + itemString.encode('utf-8')
+                    except UnicodeDecodeError:
+                        mailBody = mailBody + "\n\nFAILED TO PARSE ACTIVITY\n\n"
+                #mailBody = ''.encode('utf-8').join(added_item_list)
+                mail_admins('Update Activities command completed', mailBody, fail_silently=False)
                 print 'Mail sent to admins'
     
     def add_googlereader_items(self):
@@ -96,46 +103,49 @@ class Command(NoArgsCommand):
             print 'Attempting to parse Google Reader feed'
             parsed_feed = feedparser.parse("http://www.google.com/reader/public/atom/user%2F10780706687522073033%2Fstate%2Fcom.google%2Fbroadcast")
             for entry in parsed_feed.entries:
-                if entry.has_key('content'):
+                title = entry.title.encode(parsed_feed.encoding, "xmlcharrefreplace")
+                guid = entry.get("id", entry.link).encode(parsed_feed.encoding, "xmlcharrefreplace")
+                link = entry.link.encode(parsed_feed.encoding, "xmlcharrefreplace")
+                source = u'GR' #1 # Google Reader is source choice 1
+                public = True
+                shared_by = u"Dan Carroll"
+                comments =u""
+                
+                if not guid:
+                    guid = link
+                    
+                try:
+                    if entry.has_key('published_parsed'):
+                        date_published = datetime.datetime.fromtimestamp(time.mktime(entry.published_parsed) - time.timezone)
+                    elif entry.has_key('updated_parsed'):
+                        date_published = datetime.datetime.fromtimestamp(time.mktime(entry.updated_parsed) - time.timezone)
+                    elif entry.has_key('modified_parsed'):
+                        date_published = datetime.datetime.fromtimestamp(time.mktime(entry.modified_parsed) - time.timezone)
+                    else:
+                        date_published = datetime.datetime.now()
+                except TypeError:
+                    date_published = datetime.datetime.now()
+                        
+                if entry.has_key('content'):        
                     if len(entry.content) == 2:
-                        title = entry.title.encode(parsed_feed.encoding, "xmlcharrefreplace")
-                        guid = entry.get("id", entry.link).encode(parsed_feed.encoding, "xmlcharrefreplace")
-                        link = entry.link.encode(parsed_feed.encoding, "xmlcharrefreplace")
-                        source = u'GR' #1 # Google Reader is source choice 1
-                        public = True
-                        
-                        if not guid:
-                            guid = link
-                        
                         comments = entry.content[1].value.encode(parsed_feed.encoding, "xmlcharrefreplace")
-                        shared_by = u"Dan Carroll"
                         
-                        try:
-                            if entry.has_key('published_parsed'):
-                                date_published = datetime.datetime.fromtimestamp(time.mktime(entry.published_parsed) - time.timezone)
-                            elif entry.has_key('updated_parsed'):
-                                date_published = datetime.datetime.fromtimestamp(time.mktime(entry.updated_parsed) - time.timezone)
-                            elif entry.has_key('modified_parsed'):
-                                date_published = datetime.datetime.fromtimestamp(time.mktime(entry.modified_parsed) - time.timezone)
-                            else:
-                                date_published = datetime.datetime.now()
-                        except TypeError:
-                            date_published = datetime.datetime.now()
-                            
-                        try:
-                            #SharedItem.objects.get(guid=guid)
-                            Activity.objects.get(guid=guid)
-                        #except SharedItem.DoesNotExist:
-                        except Activity.DoesNotExist:
-                            print "Created item: %s (%s)" % (title, link)
-                            added_item_list.append("Created item: %s (%s)\n" % (title, link))
-                            added_item_list.append("  With comment: %s\n\n" % comments)
-                            try:
-                                #SharedItem.objects.create(title=title, link=link, source=source, comments=comments, shared_by=shared_by, pub_date=date_published, guid=guid)
-                                Activity.objects.create(title=title, link=link, source=source, username=shared_by, author=shared_by, comments=comments, pub_date=date_published, published=public, guid=guid)
-                            except:
-                                print "Unexpected error in Google Reader:", sys.exc_info()[0]
-                                added_item_list.append("Unexpected error in Google Reader: %s\n\n" % sys.exc_info()[0])
+      
+                try:
+                    #SharedItem.objects.get(guid=guid)
+                    Activity.objects.get(guid=guid)
+                #except SharedItem.DoesNotExist:
+                except Activity.DoesNotExist:
+                    print "Created item: %s (%s)" % (title, link)
+                    added_item_list.append("Created item: %s (%s)\n" % (title, link))
+                    if comments:
+                        added_item_list.append("  With comment: %s\n\n" % comments)
+                    try:
+                        #SharedItem.objects.create(title=title, link=link, source=source, comments=comments, shared_by=shared_by, pub_date=date_published, guid=guid)
+                        Activity.objects.create(title=title, link=link, source=source, username=shared_by, author=shared_by, comments=comments, pub_date=date_published, published=public, guid=guid)
+                    except:
+                        print "Unexpected error in Google Reader:", sys.exc_info()[0]
+                        added_item_list.append("Unexpected error in Google Reader: %s\n\n" % sys.exc_info()[0])
         except:
             print "Unexpected error:", sys.exc_info()[0]
             added_item_list.append("Unexpected error: %s\n\n" % sys.exc_info()[0])             
