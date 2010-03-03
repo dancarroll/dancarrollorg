@@ -36,8 +36,7 @@ urlpatterns = patterns('',
     # Sitemap
     (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     
-    #url(r'^$', view='mysite.views.index', name='main_index'),
-    url(r'^test/$', view='mysite.views.index', name='main_index'),
+    url(r'^$', view='mysite.views.index', name='main_index'),
 )
 
 if settings.DEBUG:
