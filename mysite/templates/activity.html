@@ -2,25 +2,22 @@
 {% block title %} | Activity{% endblock %}
 
 {% block content %}
-    <div class="content">
-        {% for activity in activities.object_list %}
-            {% ifchanged activity.pub_date.date %}
-                {% if not forloop.first %}</ul></div>{% endif %}
-                
-                <h2 class="section-title">{{ activity.pub_date|date:"F j" }}</h2>
-                <div id="activity-list"><ul>
-            {% endifchanged %}
+    {% for activity in activities.object_list %}
+        {% ifchanged activity.pub_date.date %}
+            {% if not forloop.first %}</ul></div>{% endif %}
             
-            <li><a href="{{ activity.get_network_link }}"><img src="{{ MEDIA_URL }}networks/{{ activity.get_source_display }}_16.png" alt="{{ activity.get_source_display }}" /></a>{{ activity.get_activity_prefix}} <a href="{{ activity.link }}">{{ activity.title }}</a>
-            <span class="time">{{ activity.pub_date|timesince|upper }} AGO</span></li>
+            <h2 class="section-title">{{ activity.pub_date|date:"F j" }}</h2>
+            <div id="activity-list"><ul>
+        {% endifchanged %}
         
-        {% endfor %}
-        
-        <div class="indicator">
-                {% if has_previous %}<a href="?page={{ activities.number|add:"-1" }}">&#171; Newer</a>{% endif %}
-                {% if has_previous and has_next %}|{% endif %}
-                {% if has_next %}<a href="?page={{ activities.number|add:"1" }}">Older &#187;</a>{% endif %}
-        </div>
+        <li><a href="{{ activity.get_network_link }}"><img src="{{ MEDIA_URL }}networks/{{ activity.get_source_display }}_16.png" alt="{{ activity.get_source_display }}" /></a>{{ activity.get_activity_prefix}} <a href="{{ activity.link }}">{{ activity.title }}</a>
+        <span class="time">{{ activity.pub_date|timesince|upper }} AGO</span></li>
+    
+    {% endfor %}
         </ul></div>
+    <div class="indicator">
+        {% if has_previous %}<a href="?page={{ activities.number|add:"-1" }}">&#171; Newer</a>{% endif %}
+        {% if has_previous and has_next %}|{% endif %}
+        {% if has_next %}<a href="?page={{ activities.number|add:"1" }}">Older &#187;</a>{% endif %}
     </div>
 {% endblock %}
