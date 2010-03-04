@@ -14,14 +14,16 @@
         <h2 class="section-title">{% block contentTitle %}<a href="{% url blog_index %}">entries</a>{% endblock %}</h2>
         {% block entryList %}
         <div id="entry-list">
-            {% if is_paginated and has_previous %}<div class="indicator"><a href="{% url blog_index_paginated previous %}">Newer entries &#187;</a></div>{% endif %}
-            
             {% for entry in object_list %}
                 <h3><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a> <span class="time">POSTED {{ entry.pub_date|timesince|upper }} AGO</span></h3>
                 <p>{{ entry.snip }} <a href="{{ entry.get_absolute_url }}">(Read more...)</a></p>
             {% endfor %}
-               
-            {% if is_paginated and has_next %}<div class="indicator"><a href="{% url blog_index_paginated next %}">Older entries &#187;</a></div>{% endif %}
+            
+            <div class="indicator">
+                {% if is_paginated and has_previous %}<a href="{% url blog_index_paginated previous %}">&#171; Newer entries</a>{% endif %}
+                {% if is_paginated and has_previous and has_next %}|{% endif %}
+                {% if is_paginated and has_next %}<a href="{% url blog_index_paginated next %}">Older entries &#187;</a>{% endif %}
+            </div>
         </div>
         {% endblock %}
     </div>

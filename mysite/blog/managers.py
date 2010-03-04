@@ -7,3 +7,6 @@ class PublishedManager(Manager):
    
     def published(self):
         return self.get_query_set().filter(published=True, pub_date__lte=datetime.datetime.now())
+
+    def published_for_list(self):
+        return self.published().defer("tags", "body")

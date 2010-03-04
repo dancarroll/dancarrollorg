@@ -11,7 +11,7 @@ import re
 def blog_entry_list(request, page=1, **kwargs):
     return list_detail.object_list(
         request,
-        queryset = Entry.objects.published(),
+        queryset = Entry.objects.published_for_list(),
         paginate_by = 10,
         page = page,
         **kwargs
@@ -24,7 +24,7 @@ def blog_archive_year(request, year, **kwargs):
         request,
         year = year,
         date_field = 'pub_date',
-        queryset = Entry.objects.published(),
+        queryset = Entry.objects.published_for_list(),
         make_object_list = True,
         **kwargs
     )
@@ -38,7 +38,7 @@ def blog_archive_month(request, year, month, **kwargs):
         month = month,
         date_field = 'pub_date',
         month_format = "%m",
-        queryset = Entry.objects.published(),
+        queryset = Entry.objects.published_for_list(),
         **kwargs
     )
 blog_archive_month.__doc__ = date_based.archive_month.__doc__
@@ -58,6 +58,7 @@ blog_archive_month.__doc__ = date_based.archive_month.__doc__
 #    )
 #blog_entry_detail.__doc__ = date_based.object_detail.__doc__
 def blog_entry_detail(request, slug, year, month, template_name="blog/entry_detail.html"):
+    # Don't use Entry.objects.published() in order to be able to check posts before they are officially published
     entry = Entry.objects.filter(
         slug = slug,
         pub_date__year = int(year),
@@ -88,7 +89,7 @@ def tag_list(request, template_name = 'blog/tag_list.html', **kwargs):
 def tag_detail(request, slug, template_name = 'blog/tag_detail.html', **kwargs):
     return tagged_object_list(
         request,
-        queryset_or_model = Entry.objects.published(),
+        queryset_or_model = Entry.objects.published_for_list(),
         tag = slug,
         template_name = template_name,
         **kwargs

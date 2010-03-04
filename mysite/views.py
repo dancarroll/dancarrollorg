@@ -5,8 +5,7 @@ from mysite.blog.models import Entry, SharedItem, Activity
 
 def index(request):
     return render_to_response('index.html',
-                {'blog_entries': Entry.objects.published()[:2], 
-                 'shared_items': SharedItem.objects.all()[:4],
+                {'blog_entries': Entry.objects.published_for_list()[:2],
                  'activities': Activity.objects.published()[:5] },
                 context_instance=RequestContext(request))
 
