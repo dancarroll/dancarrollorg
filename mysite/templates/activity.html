@@ -3,7 +3,7 @@
 
 {% block content %}
     <div class="content">
-        {% for activity in activities %}
+        {% for activity in activities.object_list %}
             {% ifchanged activity.pub_date.date %}
                 {% if not forloop.first %}</ul></div>{% endif %}
                 
@@ -15,6 +15,12 @@
             <span class="time">{{ activity.pub_date|timesince|upper }} AGO</span></li>
         
         {% endfor %}
+        
+        <div class="indicator">
+                {% if has_previous %}<a href="?page={{ activities.number|add:"-1" }}">&#171; Newer</a>{% endif %}
+                {% if has_previous and has_next %}|{% endif %}
+                {% if has_next %}<a href="?page={{ activities.number|add:"1" }}">Older &#187;</a>{% endif %}
+        </div>
         </ul></div>
     </div>
 {% endblock %}
