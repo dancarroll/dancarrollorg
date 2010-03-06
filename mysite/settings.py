@@ -78,7 +78,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
 )
 
 ROOT_URLCONF = 'mysite.urls'
@@ -105,12 +105,18 @@ INSTALLED_APPS = (
     'mysite.blog',
     'disqus',
     'tagging',
+    #'django_xmlrpc',
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
     #'debug_toolbar', # will add this to local_settings.py if needed
 )
 
+XMLRPC_DEBUG = True
+XMLRPC_METHODS = (
+    # We list methods to be exposed in the form (<method path>, <xml-rpc name>,)
+    ('mysite.blog.metaweblog.get_post', 'test',),
+)
 
 try:
     from local_settings import *

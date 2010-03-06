@@ -23,6 +23,8 @@ Social Network Icon Pack by Rogie King is licensed under a Creative Commons Attr
 
 django-paging for the InfinitePaginator code
 
+Graham Binns for a starting point for using django-xmlrpc to implement the MetaWeblog API
+
 Components used:
 ----------------
 django-tagging

@@ -1,7 +1,11 @@
 from django.db import models
+from django.contrib.sites.models import Site
 from django.contrib.syndication.feeds import Feed
+from django.template.defaultfilters import slugify
+
 from mysite.blog.managers import PublishedManager
 from tagging.fields import TagField
+from tagging.models import Tag
 
 import datetime
 import tagging
@@ -47,6 +51,57 @@ class Entry(models.Model):
     
     def get_next_entry(self):
         return self.get_next_by_pub_date(published=True)
+
+    def as_metaweblog_struct(self):
+        """Convert an Entry to a MetaWeblog API struct."""
+        #tags = [tag.name for tag in Tag.objects.get_for_object(self)]
+
+        struct = {
+            'title': self.title,
+            'link': "http://%s%s" % (
+                #Site.objects.get_current().domain, self.get_absolute_url()),
+                "127.0.0.1:8000", self.get_absolute_url()),
+            'description': self.body,
+            'author': 'Dan Carroll',
+            'comments': "http://%s%s" % (
+                Site.objects.get_current().domain, self.get_absolute_url()),
+            'guid': "http://%s%s" % (
+                Site.objects.get_current().domain, self.get_absolute_url()),
+            'pubDate': self.pub_date.strftime("%Y-%m-%d %H:%M:%S"),
+            'categories': self.tags,
+            'postid': self.id,
+        }
+
+        return struct
+
+    def populate_from_metaweblog_struct(self, struct, user):
+        """Populate a post from a metaweblog struct.
+
+        :param struct: The struct to use for population.
+        :param user: The user doing the work.
+        """
+        self.title = struct.get('title')
+        self.body = struct.get('description')
+        if self.pub_date is None:
+            self.pub_date = datetime.datetime.now()
+        #self.author = user
+        self.mod_date = datetime.datetime.now()
+
+        # We only alter the slug if it's not None
+        if not self.slug:
+            self.slug = slugify(self.title)[0:49]
+
+        #TODO: fix snip calculation
+        if not self.snip:
+            self.snip = "This is a placeholder snip."
+
+        tag_list = struct.get('categories', [])
+        self.tags = ','.join(tag_list)
+
+        try:
+            self.save()
+        except Warning:
+            pass # Usually a truncation warning
 
 class SharedItem(models.Model):
     """Shared items from bookmarking websites (Google Reader, etc)."""

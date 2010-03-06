@@ -31,9 +31,9 @@ urlpatterns = patterns('',
         view=blog_views.blog_entry_list,
         name='blog_index_paginated'),
 
+    (r'xmlrpc/$', 'django_xmlrpc.views.handle_xmlrpc',),
+        
     url(r'^$',
         view=blog_views.blog_entry_list,
         name='blog_index'),
-        
-    (r'^comments/', include('django.contrib.comments.urls')),
 )

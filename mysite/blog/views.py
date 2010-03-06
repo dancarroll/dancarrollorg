@@ -9,6 +9,13 @@ import datetime
 import re
 
 def blog_entry_list(request, page=1, **kwargs):
+    # Uncomment these lines to support theme detection by Windows Live Writer.
+    # It needs to see the actual post display, but it stupidly goes to the main
+    # blog page rather than the entry's URL. So, let's just make the main blog
+    # index point there temporarily.
+    #post = Entry.objects.published().order_by('-pub_date')[0]
+    #return blog_entry_detail(request, post.slug, post.pub_date.year, post.pub_date.month)
+    
     return list_detail.object_list(
         request,
         queryset = Entry.objects.published_for_list(),
