@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from mysite.blog.models import Entry, SharedItem, Activity
+from mysite.blog.models import Entry, Activity
 from mysite.blog.paginator import InfinitePaginator
 from blog.views import blog_entry_detail
 
@@ -39,9 +39,4 @@ def activity(request):
                 {'activities': activities,
                  'has_next': activities.has_next(),
                  'has_previous': activities.has_previous() },
-                context_instance=RequestContext(request))
-
-def shared_items(request):
-    return render_to_response('shared_items.html',
-                {'shared_items': SharedItem.objects.all()[:20] },
                 context_instance=RequestContext(request))

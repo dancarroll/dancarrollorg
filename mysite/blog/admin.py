@@ -1,5 +1,5 @@
 # Blog application admin page
-from mysite.blog.models import Entry, SharedItem, Activity
+from mysite.blog.models import Entry, Activity
 from django.contrib import admin
 
 class EntryAdmin(admin.ModelAdmin):
@@ -10,14 +10,6 @@ class EntryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 admin.site.register(Entry, EntryAdmin)
-
-class SharedItemAdmin(admin.ModelAdmin):
-    list_display = ('title', 'link', 'pub_date', 'shared_by', 'source')
-    list_filter = ['pub_date', 'source', 'shared_by']
-    search_fields = ['title', 'comments']
-    date_hierarchy = 'pub_date'
-
-admin.site.register(SharedItem, SharedItemAdmin)
 
 class ActivityAdmin(admin.ModelAdmin):
     list_display = ('source', 'title', 'link', 'pub_date', 'published', 'username', 'author', 'comments')

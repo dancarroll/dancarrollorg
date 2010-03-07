@@ -1,7 +1,6 @@
 from django.db.models import Manager
 import datetime
 
-
 class PublishedManager(Manager):
     """Returns published posts that are not in the future."""
    

@@ -15,19 +15,13 @@ sitemaps = {
 }
 
 urlpatterns = patterns('',
-    # Example:
-    # (r'^mysite/', include('mysite.foo.urls')),
-
     # Django administration
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/(.*)', admin.site.root),
     
-    
-    #(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-    #    {'document_root': '/home/erunama/erunama.com/public/media/', 'show_indexes': True}),
+    # Main sections
     url(r'^activity/$', view='mysite.views.activity', name='main_activity'),
     (r'^blog/', include('mysite.blog.urls')),
-    url(r'^shared/$', view='mysite.views.shared_items', name='main_shared_items'),
     
     # RSS feeds
     url(r'^feeds/latest/$', view=LatestEntriesFeed(), name='blog_entries_rss'),
@@ -36,6 +30,7 @@ urlpatterns = patterns('',
     # Sitemap
     (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     
+    # MetaWeblog integration
     (r'^mw/', include('mysite.metaweblog.urls')),
     
     url(r'^$', view='mysite.views.index', name='main_index'),

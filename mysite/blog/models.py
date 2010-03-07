@@ -97,7 +97,6 @@ class Entry(models.Model):
             else:
                 self.slug = slugify(self.title)[0:49]
 
-        #TODO: fix snip calculation
         mt_excerpt = struct.get('mt_excerpt')
         if mt_excerpt:
             self.snip = mt_excerpt
@@ -113,29 +112,6 @@ class Entry(models.Model):
         except Warning:
             pass # Usually a truncation warning
 
-class SharedItem(models.Model):
-    """Shared items from bookmarking websites (Google Reader, etc)."""
-    SOURCE_CHOICES = (
-        (1, 'Google Reader'),
-    )
-    
-    title = models.CharField('title', max_length=200)
-    link = models.URLField(max_length=500)
-    source = models.IntegerField(choices=SOURCE_CHOICES, default=1)
-    comments = models.TextField(blank=True)
-    shared_by = models.CharField(max_length=20)
-    pub_date = models.DateTimeField('Date published')
-    guid = models.CharField(max_length=255, unique=True, db_index=True)
-    
-    class Meta:
-        verbose_name = 'shared item'
-        verbose_name_plural = 'shared items'
-        db_table = 'blog_shareditems'
-        ordering = ('-pub_date',)
-        get_latest_by = 'pub_date'
-    
-    def __unicode__(self):
-        return u'%s' % self.title
 
 class Activity(models.Model):
     """Activity from social network (Twitter, Flickr, etc)."""

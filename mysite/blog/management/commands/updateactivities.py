@@ -2,7 +2,7 @@ from django.core.management.base import NoArgsCommand
 from django.core.management.color import no_style
 from django.core.mail import mail_admins
 from optparse import make_option
-from blog.models import Activity, SharedItem
+from blog.models import Activity
 
 import os
 import sys
@@ -10,11 +10,6 @@ import time
 import socket
 import datetime
 import feedparser
-
-#try:
-#    set
-#except NameError:
-#    from sets import Set as set   # Python 2.3 fallback
 
 class Command(NoArgsCommand):
     option_list = NoArgsCommand.option_list + (
@@ -132,16 +127,13 @@ class Command(NoArgsCommand):
                         
       
                 try:
-                    #SharedItem.objects.get(guid=guid)
                     Activity.objects.get(guid=guid)
-                #except SharedItem.DoesNotExist:
                 except Activity.DoesNotExist:
                     print "Created item: %s (%s)" % (title, link)
                     added_item_list.append("Created item: %s (%s)\n" % (title, link))
                     if comments:
                         added_item_list.append("  With comment: %s\n\n" % comments)
                     try:
-                        #SharedItem.objects.create(title=title, link=link, source=source, comments=comments, shared_by=shared_by, pub_date=date_published, guid=guid)
                         Activity.objects.create(title=title, link=link, source=source, username=shared_by, author=shared_by, comments=comments, pub_date=date_published, published=public, guid=guid)
                     except:
                         print "Unexpected error in Google Reader:", sys.exc_info()[0]
