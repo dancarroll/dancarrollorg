@@ -70,6 +70,8 @@ class Entry(models.Model):
             'pubDate': self.pub_date.strftime("%Y-%m-%d %H:%M:%S"),
             'categories': self.tags,
             'postid': self.id,
+            'wp_slug': self.slug,
+            'mt_excerpt': self.snip,
         }
 
         return struct
@@ -88,12 +90,20 @@ class Entry(models.Model):
         self.mod_date = datetime.datetime.now()
 
         # We only alter the slug if it's not None
+        wp_slug = struct.get('wp_slug')
         if not self.slug:
-            self.slug = slugify(self.title)[0:49]
+            if wp_slug:
+                self.slug = wp_slug
+            else:
+                self.slug = slugify(self.title)[0:49]
 
         #TODO: fix snip calculation
-        if not self.snip:
-            self.snip = "This is a placeholder snip."
+        mt_excerpt = struct.get('mt_excerpt')
+        if mt_excerpt:
+            self.snip = mt_excerpt
+        else:
+            if not self.snip:
+                self.snip = ""
 
         tag_list = struct.get('categories', [])
         self.tags = ','.join(tag_list)

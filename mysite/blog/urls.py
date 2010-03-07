@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
-from mysite.blog.models import Entry
-from mysite.blog import views as blog_views
+from blog.models import Entry
+from blog import views as blog_views
 
 urlpatterns = patterns('',
     url(r'^(?P<year>\d{4})/(?P<month>\d{2})/(?P<slug>[-\w]+)/$',
@@ -30,8 +30,6 @@ urlpatterns = patterns('',
     url(r'^page/(?P<page>\w)/$',
         view=blog_views.blog_entry_list,
         name='blog_index_paginated'),
-
-    (r'xmlrpc/$', 'django_xmlrpc.views.handle_xmlrpc',),
         
     url(r'^$',
         view=blog_views.blog_entry_list,

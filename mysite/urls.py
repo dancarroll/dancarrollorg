@@ -36,6 +36,8 @@ urlpatterns = patterns('',
     # Sitemap
     (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     
+    (r'^mw/', include('mysite.metaweblog.urls')),
+    
     url(r'^$', view='mysite.views.index', name='main_index'),
 )
 

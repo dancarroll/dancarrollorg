@@ -93,7 +93,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.media",
-    "django.contrib.messages.context_processors.messages"
+    "django.contrib.messages.context_processors.messages",
+    "mysite.context_processors.CurrentSite",
 )
 
 INSTALLED_APPS = (
@@ -105,7 +106,6 @@ INSTALLED_APPS = (
     'mysite.blog',
     'disqus',
     'tagging',
-    #'django_xmlrpc',
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
@@ -115,7 +115,7 @@ INSTALLED_APPS = (
 XMLRPC_DEBUG = True
 XMLRPC_METHODS = (
     # We list methods to be exposed in the form (<method path>, <xml-rpc name>,)
-    ('mysite.blog.metaweblog.get_post', 'test',),
+    ('mysite.metaweblog.metaweblog.get_post', 'test',),
 )
 
 try:

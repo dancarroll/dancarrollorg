@@ -95,7 +95,7 @@ def get_users_blogs(appkey, username, password):
 
     return [{
         'isAdmin': user.is_superuser,
-        'url': 'http://%s/blog/' % "127.0.0.1:8000", #Site.objects.get_current().domain,
+        'url': 'http://%s/' % Site.objects.get_current().domain,
         'blogid': 1,
         'blogName': '%s' % Site.objects.get_current().name }]
 
@@ -113,7 +113,7 @@ def blogger_get_users_blogs(appkey, username, password):
 
     return [{
         'isAdmin': user.is_superuser,
-        'url': 'http://%s/blog/' % "127.0.0.1:8000", #Site.objects.get_current().domain,
+        'url': 'http://%s/' % Site.objects.get_current().domain,
         'blogid': 1,
         'blogName': '%s' % Site.objects.get_current().name }]
 
