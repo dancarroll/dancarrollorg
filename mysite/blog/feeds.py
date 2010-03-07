@@ -14,6 +14,12 @@ class LatestEntriesFeed(Feed):
     
     def description(self):
         return "Latest blog entries for %s" % Site.objects.get_current().domain
+    
+    def item_title(self, item):
+        return item.title
+    
+    def item_description(self, item):
+        return item.snip
         
 class LatestEntriesByTagFeed(Feed):
     def get_object(self, request, tag_name):
@@ -30,3 +36,9 @@ class LatestEntriesByTagFeed(Feed):
         
     def items(self, obj):
         return TaggedItem.objects.get_by_model(Entry.objects.published(), obj)[:5]
+    
+    def item_title(self, item):
+        return item.title
+    
+    def item_description(self, item):
+        return item.snip
