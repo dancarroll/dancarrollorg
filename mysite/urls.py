@@ -3,13 +3,15 @@ from django.conf import settings
 from django.contrib.sitemaps import FlatPageSitemap, GenericSitemap
 from mysite.blog.feeds import LatestEntriesFeed, LatestEntriesByTagFeed
 from mysite.blog.models import Entry
-from mysite.sitemaps import SectionSitemap
+from mysite.sitemaps import SectionSitemap, BlogArchiveSitemap, TagSitemap
 
 from django.contrib import admin
 admin.autodiscover()
 
 sitemaps = {
     'sections': SectionSitemap,
+    'blog-archive': BlogArchiveSitemap,
+    'blog-tags': TagSitemap,
     'flatpages': FlatPageSitemap,
     'blog': GenericSitemap({'queryset': Entry.objects.published(), 'date_field': 'mod_date',}),
 }
