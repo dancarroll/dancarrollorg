@@ -17,6 +17,8 @@
         </div>
     </div>
 
+    <div id="comments">
+    <h2 class="section-title">comments</h2>
     {% if object.allow_comments %}
         {% load disqus_tags %}
         {% disqus_dev %}
@@ -24,5 +26,6 @@
     {% else %}
         <h3>Comments have been closed for this entry.</h3>
     {% endif %}
+    </div>
     
 {% endblock %}
