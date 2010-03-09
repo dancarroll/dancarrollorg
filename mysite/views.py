@@ -21,15 +21,20 @@ def index(request):
                 context_instance=RequestContext(request))
 
 def activity(request):
-    activity_list = Activity.objects.published().defer("username", "author", "comments", "guid")
-    paginator = InfinitePaginator(activity_list, 25)
-    
+    type = request.GET.get('type', '')
+    print "Activity type: %s" % type
+    if type:
+        activity_list = Activity.objects.published().filter(source__exact=type)
+    else:
+        activity_list = Activity.objects.published().defer("username", "author", "comments", "guid")
+
     # Make sure page request is an int.  If not, deliver first page.
     try:
         page = int(request.GET.get('page', '1'))
     except ValueError:
         page = 1
     
+    paginator = InfinitePaginator(activity_list, 25)
     try:
         activities = paginator.page(page)
     except:

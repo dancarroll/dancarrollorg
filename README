@@ -30,3 +30,5 @@ Components used:
 django-tagging
 feedparser
 django-disqus
+simplejson
+python-twitter (http://code.google.com/p/python-twitter/)

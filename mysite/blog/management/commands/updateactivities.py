@@ -10,12 +10,10 @@ import time
 import socket
 import datetime
 import feedparser
+import twitter
 
 class Command(NoArgsCommand):
     option_list = NoArgsCommand.option_list + (
-        #make_option('--verbosity', action='store', dest='verbosity', default='1',
-        #    type='choice', choices=['0', '1', '2'],
-        #    help='Verbosity level; 0=minimal output, 1=normal output, 2=all output'),
         make_option('--noinput', action='store_false', dest='interactive', default=True,
             help='Tells Django to NOT prompt the user for input of any kind.'),
     )
@@ -33,22 +31,16 @@ class Command(NoArgsCommand):
                 added_item_list.append(readerItem)
                 
             added_item_list.append("\nTWITTER\n\n")
-            # for twitterItem in self.add_twitter_items():
-                # added_item_list.append(twitterItem)
-            for twitterItem in self.add_network_items(u'T', u'erunama', "erunama: ", "http://twitter.com/statuses/user_timeline/erunama.atom"):
+            for twitterItem in self.add_twitter_items('erunama'):
                 items_added = True
                 added_item_list.append(twitterItem)
                 
             added_item_list.append("\nDIGG\n\n")
-            # for diggItem in self.add_digg_items():
-                # added_item_list.append(diggItem)
             for diggItem in self.add_network_items(u'DG', u'erunama', None, "http://digg.com/users/erunama/history/diggs.rss"):
                 items_added = True
                 added_item_list.append(diggItem)
                 
             added_item_list.append("\nDELICIOUS\n\n")
-            # for deliciousItem in self.add_delicious_items():
-                # added_item_list.append(deliciousItem)
             for deliciousItem in self.add_network_items(u'DL', u'erunama', None, "http://feeds.delicious.com/v2/rss/erunama?count=5"):
                 items_added = True
                 added_item_list.append(deliciousItem)
@@ -73,8 +65,7 @@ class Command(NoArgsCommand):
             #for facebookItem in self.add_network_items(u'HU', u'erunama', None, "http://www.hulu.com/feed/history/erunama"):
             #    items_added = True
             #    added_item_list.append(facebookItem)
-            
-            
+             
         except:
             items_added = True
             print "Unexpected error:", sys.exc_info()[0]
@@ -87,7 +78,6 @@ class Command(NoArgsCommand):
                         mailBody = mailBody.encode('utf-8') + itemString.encode('utf-8')
                     except UnicodeDecodeError:
                         mailBody = mailBody + "\n\nFAILED TO PARSE ACTIVITY\n\n"
-                #mailBody = ''.encode('utf-8').join(added_item_list)
                 mail_admins('Update Activities command completed', mailBody, fail_silently=False)
                 print 'Mail sent to admins'
     
@@ -196,6 +186,41 @@ class Command(NoArgsCommand):
             added_item_list.append("Unexpected error: %s\n\n" % sys.exc_info()[0])             
         finally:
             return added_item_list    
+
+    def add_twitter_items(self, username):
+        added_item_list = []
+        try:
+            print 'Attempting to obtain Twitter items'
+            api = twitter.Api()
+            statuses = api.GetUserTimeline(username, count=50)
+            
+            for status in statuses:
+                title = status.text
+                guid = "twitter:%s" % status.id
+                link = "http://twitter.com/%s/statuses/%s" % (status.user.screen_name, status.id)
+                source = u'T'
+                public = True
+                author = status.user.name
+                
+                date_published = datetime.datetime.fromtimestamp(status.created_at_in_seconds)
+                
+                # Don't show @replies
+                if not status.in_reply_to_user_id:
+                    try:
+                        Activity.objects.get(guid=guid)
+                    except Activity.DoesNotExist:
+                        print "Created item: %s (%s)" % (title, link)
+                        added_item_list.append("Created item: %s (%s)\n" % (title, link))
+                        try:
+                            Activity.objects.create(title=title, link=link, source=source, username=username, author=author, pub_date=date_published, published=public, guid=guid)
+                        except:
+                            print "Unexpected error with feed:", sys.exc_info()[0]
+                            added_item_list.append("Unexpected error with feed: %s\n\n" % sys.exc_info()[0])
+        except:
+            print "Unexpected error:", sys.exc_info()[0]
+            added_item_list.append("Unexpected error: %s\n\n" % sys.exc_info()[0])             
+        finally:
+            return added_item_list
 
 # Authenticated feeds
 #>>> import urllib2
