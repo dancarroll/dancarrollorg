@@ -68,8 +68,10 @@ ADMIN_MEDIA_ROOT = ''
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
+    ('django.template.loaders.cached.Loader', (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )),
 )
 
 MIDDLEWARE_CLASSES = (
@@ -78,7 +80,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
 )
 
 ROOT_URLCONF = 'mysite.urls'
@@ -109,10 +110,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.sitemaps',
-    #'debug_toolbar', # will add this to local_settings.py if needed
 )
 
-XMLRPC_DEBUG = True
 XMLRPC_METHODS = (
     # We list methods to be exposed in the form (<method path>, <xml-rpc name>,)
     ('mysite.metaweblog.metaweblog.get_post', 'test',),
@@ -122,3 +121,16 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
+if DEBUG:
+    MIDDLEWARE_CLASSES = (
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ) + MIDDLEWARE_CLASSES
+    
+    INSTALLED_APPS += (
+        'debug_toolbar',
+    )
+    
+    DEBUG_TOOLBAR_CONFIG = {
+        'INTERCEPT_REDIRECTS': False,
+    }

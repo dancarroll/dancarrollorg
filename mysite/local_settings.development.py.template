@@ -28,34 +28,6 @@ SECRET_KEY = 'itisasecret'
 DISQUS_API_KEY = 'thisisanothersecret'
 DISQUS_WEBSITE_SHORTNAME = ''
 
-MIDDLEWARE_CLASSES = (
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
-)
-
 TEMPLATE_DIRS = (
     "/path/to/templates/",
 )
-
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.flatpages',
-    'mysite.blog',
-    'disqus',
-    'tagging',
-    'django.contrib.admin',
-    'django.contrib.admindocs',
-    'django.contrib.sitemaps',
-    'debug_toolbar',
-)
-
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
