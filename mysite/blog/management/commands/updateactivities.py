@@ -45,26 +45,12 @@ class Command(NoArgsCommand):
                 items_added = True
                 added_item_list.append(deliciousItem)
 
-            # FACEBOOK
-            # http://www.facebook.com/feeds/status.php?id=401024&viewer=401024&key=c1ba152f09&format=rss20
-            added_item_list.append("\nFACEBOOK\n\n")
-            for facebookItem in self.add_network_items(u'FB', u'Dan Carroll', None, "http://www.facebook.com/feeds/status.php?id=401024&viewer=401024&key=c1ba152f09&format=rss20"):
-                items_added = True
-                added_item_list.append(facebookItem)
-
             # REDDIT
             # http://www.reddit.com/user/erunama/liked/.rss
             added_item_list.append("\nREDDIT\n\n")
             for redditItem in self.add_network_items(u'RD', u'erunama', None, "http://www.reddit.com/user/erunama/liked/.rss"):
                 items_added = True
                 added_item_list.append(redditItem)
-            
-            # HULU
-            # http://www.hulu.com/feed/history/erunama
-            #added_item_list.append("\nHULU\n\n")
-            #for facebookItem in self.add_network_items(u'HU', u'erunama', None, "http://www.hulu.com/feed/history/erunama"):
-            #    items_added = True
-            #    added_item_list.append(facebookItem)
              
         except:
             items_added = True
