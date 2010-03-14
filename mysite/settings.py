@@ -1,4 +1,5 @@
 # Django settings for mysite project.
+import os
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -42,6 +43,10 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = False
 
+# Base directory (all other paths should be relative to this path, rather 
+# than hard-coded)
+BASE_DIR = os.path.dirname(__file__)
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = '/home/erunama/media.erunama.com/'
@@ -84,10 +89,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'mysite.urls'
 
-# This should be defined in the local_settings.py file
-#TEMPLATE_DIRS = (
-#    ""
-#)
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates/'),
+)
 
 # Overrides the default in order to remove I18N processor
 TEMPLATE_CONTEXT_PROCESSORS = (

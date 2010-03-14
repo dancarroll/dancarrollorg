@@ -27,7 +27,3 @@ SECRET_KEY = 'itisasecret'
 # shortname from your DISQUS account.
 DISQUS_API_KEY = 'thisisanothersecret'
 DISQUS_WEBSITE_SHORTNAME = ''
-
-TEMPLATE_DIRS = (
-    "/path/to/templates/",
-)
