@@ -11,9 +11,12 @@ def index(request):
     # It needs to see the actual post display, but it stupidly goes to the main
     # blog page rather than the entry's URL. So, if we detect WLW's user agent,
     # let's just make the main index show the latest blog post.
-    if request.META['HTTP_USER_AGENT'].find("Windows Live Writer") > -1:
-        post = Entry.objects.published().order_by('-pub_date')[0]
-        return blog_entry_detail(request, post.slug, post.pub_date.year, post.pub_date.month)
+    try:
+        if request.META['HTTP_USER_AGENT'].find("Windows Live Writer") > -1:
+            post = Entry.objects.published().order_by('-pub_date')[0]
+            return blog_entry_detail(request, post.slug, post.pub_date.year, post.pub_date.month)
+    except KeyError:
+        pass
 
     return render_to_response('index.html',
                 {'blog_entries': Entry.objects.published_for_list()[:2],
