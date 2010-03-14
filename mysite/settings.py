@@ -7,10 +7,11 @@ TEMPLATE_DEBUG = DEBUG
 INTERNAL_IPS = ('127.0.0.1',)
 
 ADMINS = (
-    ('Dan Carroll', 'dancarroll@gmail.com'),
+    ('Dan Carroll', 'admin@dancarroll.org'),
 )
 
 MANAGERS = ADMINS
+SEND_BROKEN_LINK_EMAILS = True
 
 # These should be defined in the local_settings.py file
 EMAIL_HOST = deploy.EMAIL_HOST
