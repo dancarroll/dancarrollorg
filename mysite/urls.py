@@ -18,23 +18,24 @@ sitemaps = {
 
 urlpatterns = patterns('',
     # Django administration
-    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    (r'^admin/(.*)', admin.site.root),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/', include(admin.site.urls)),
     
     # Main sections
     url(r'^activity/$', view='mysite.views.activity', name='main_activity'),
-    (r'^blog/', include('mysite.blog.urls')),
+    url(r'^blog/', include('mysite.blog.urls')),
     
     # RSS feeds
     url(r'^feeds/latest/$', view=LatestEntriesFeed(), name='blog_entries_rss'),
     url(r'^feeds/tags/(?P<tag_name>[-\w]+)/$', view=LatestEntriesByTagFeed(), name='blog_tagged_rss'),
     
     # Sitemap
-    (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+    url(r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}, name='sitemap'),
     
     # MetaWeblog integration
-    (r'^mw/', include('mysite.metaweblog.urls')),
+    url(r'^mw/', include('mysite.metaweblog.urls')),
     
+    # Main site index
     url(r'^$', view='mysite.views.index', name='main_index'),
 )
 
@@ -42,8 +43,8 @@ if settings.DEBUG:
     from mysite.settings import MEDIA_ROOT, ADMIN_MEDIA_ROOT
     
     urlpatterns += patterns('',
-        (r'^site-media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT,
-             'show_indexes': True}),
-        (r'^admin-media/(?P<path>.*)$', 'django.views.static.serve',
-             {'document_root': ADMIN_MEDIA_ROOT, 'show_indexes': True}),
+        url(r'^site-media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': MEDIA_ROOT,
+            'show_indexes': True}),
+        url(r'^admin-media/(?P<path>.*)$', 'django.views.static.serve',
+            {'document_root': ADMIN_MEDIA_ROOT, 'show_indexes': True}),
     )

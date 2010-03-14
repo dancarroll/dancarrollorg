@@ -79,11 +79,11 @@ TEMPLATE_DIRS = (
 
 # Overrides the default in order to remove I18N processor
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.core.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.media",
-    "django.contrib.messages.context_processors.messages",
-    "mysite.context_processors.CurrentSite",
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.media',
+    'django.contrib.messages.context_processors.messages',
+    'mysite.context_processors.CurrentSite',
 )
 
 INSTALLED_APPS = (

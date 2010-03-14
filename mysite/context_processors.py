@@ -1,9 +1,9 @@
-from django.conf import settings
+from mysite import deploy
 from django.contrib.sites.models import Site
 
 def CurrentSite(request):
     try:
-        google_analytics_code = settings.GOOGLE_ANALYTICS_CODE
+        google_analytics_code = deploy.GOOGLE_ANALYTICS_CODE
     except AttributeError:
         google_analytics_code = ''
 
