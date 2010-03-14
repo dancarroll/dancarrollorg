@@ -49,7 +49,8 @@ BASE_DIR = os.path.dirname(__file__)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/home/erunama/media.erunama.com/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'site-media/')
+ADMIN_MEDIA_ROOT = os.path.join(BASE_DIR, 'site-media/admin/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -59,8 +60,7 @@ MEDIA_URL = 'http://media.erunama.com/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/admin/'
-ADMIN_MEDIA_ROOT = ''
+ADMIN_MEDIA_PREFIX = MEDIA_URL + 'admin/'
 
 # Make this unique, and don't share it with anybody.
 # This should be defined in the local_settings.py file

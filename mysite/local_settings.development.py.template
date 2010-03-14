@@ -16,9 +16,7 @@ DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
-MEDIA_ROOT = '/path/to/media/root/'
 MEDIA_URL = '/site-media/'
-ADMIN_MEDIA_ROOT = '/path/to/admin-media/root/'
 ADMIN_MEDIA_PREFIX = 'http://127.0.0.1:8000/admin-media/'
 
 SECRET_KEY = 'itisasecret'
