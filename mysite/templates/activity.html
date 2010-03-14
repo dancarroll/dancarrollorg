@@ -2,7 +2,7 @@
 {% block title %} | Activity{% endblock %}
 
 {% block content %}
-    {% for activity in activities.object_list %}
+    {% for activity in object_list %}
         {% ifchanged activity.pub_date.date %}
             {% if not forloop.first %}</ul></div>{% endif %}
             
@@ -16,8 +16,8 @@
     {% endfor %}
         </ul></div>
     <div class="indicator">
-        {% if has_previous %}<a href="?page={{ activities.number|add:"-1" }}">&#171; Newer</a>{% endif %}
+        {% if has_previous %}<a href="{{ previous }}">&#171; Newer</a>{% endif %}
         {% if has_previous and has_next %}|{% endif %}
-        {% if has_next %}<a href="?page={{ activities.number|add:"1" }}">Older &#187;</a>{% endif %}
+        {% if has_next %}<a href="{{ next }}">Older &#187;</a>{% endif %}
     </div>
 {% endblock %}

@@ -13,7 +13,7 @@ class InfinitePaginator(Paginator):
     """
 
     def __init__(self, object_list, per_page, allow_empty_first_page=True,
-        link_template='/page/%d/'):
+        link_template='?page=%d'):
         orphans = 0 # no orphans
         super(InfinitePaginator, self).__init__(object_list, per_page, orphans,
             allow_empty_first_page)
@@ -74,6 +74,12 @@ class InfinitePaginator(Paginator):
 
 
 class InfinitePage(Page):
+    def __init__(self, object_list, number, paginator):
+        self.object_list = object_list
+        self.number = number
+        self.paginator = paginator
+        self.cached_has_next = None
+        self.queried_for_next = False
 
     def __repr__(self):
         return '<Page %s>' % self.number
@@ -82,11 +88,18 @@ class InfinitePage(Page):
         """
         Checks for one more item than last on this page.
         """
+        if self.queried_for_next:
+            return self.cached_has_next
+
+        self.queried_for_next = True
         try:
             next_item = self.paginator.object_list[
                 self.number * self.paginator.per_page]
         except IndexError:
+            self.cached_has_next = False
             return False
+
+        self.cached_has_next = True
         return True
 
     def end_index(self):
@@ -108,3 +121,12 @@ class InfinitePage(Page):
         if self.has_previous():
             return self.paginator.link_template % (self.number - 1)
         return None
+
+    def create_template_context(self):
+        return {
+            'object_list': self.object_list,
+            'has_next': self.has_next(),
+            'has_previous': self.has_previous(),
+            'next': self.next_link(),
+            'previous': self.previous_link(),
+        }

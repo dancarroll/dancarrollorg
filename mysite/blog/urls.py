@@ -26,10 +26,6 @@ urlpatterns = patterns('',
     #url (r'^search/$',
     #    view=blog_views.search,
     #    name='blog_search'),
-
-    url(r'^page/(?P<page>\w)/$',
-        view=blog_views.blog_entry_list,
-        name='blog_index_paginated'),
         
     url(r'^$',
         view=blog_views.blog_entry_list,

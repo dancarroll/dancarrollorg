@@ -20,9 +20,9 @@
             {% endfor %}
             
             <div class="indicator">
-                {% if is_paginated and has_previous %}<a href="{% url blog_index_paginated previous %}">&#171; Newer entries</a>{% endif %}
-                {% if is_paginated and has_previous and has_next %}|{% endif %}
-                {% if is_paginated and has_next %}<a href="{% url blog_index_paginated next %}">Older entries &#187;</a>{% endif %}
+                {% if has_previous %}<a href="{{ previous }}">&#171; Newer entries</a>{% endif %}
+                {% if has_previous and has_next %}|{% endif %}
+                {% if has_next %}<a href="{{ next }}">Older entries &#187;</a>{% endif %}
             </div>
         </div>
         {% endblock %}

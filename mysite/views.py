@@ -22,7 +22,6 @@ def index(request):
 
 def activity(request):
     type = request.GET.get('type', '')
-    print "Activity type: %s" % type
     if type:
         activity_list = Activity.objects.published().filter(source__exact=type)
     else:
@@ -41,7 +40,5 @@ def activity(request):
         raise Http404
         
     return render_to_response('activity.html',
-                {'activities': activities,
-                 'has_next': activities.has_next(),
-                 'has_previous': activities.has_previous() },
+                activities.create_template_context(),
                 context_instance=RequestContext(request))
