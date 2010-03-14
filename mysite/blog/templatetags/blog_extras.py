@@ -7,7 +7,7 @@ register = template.Library()
 @register.inclusion_tag('blog/month_links_tag.html')
 def render_month_links():
     return {
-        'dates': Entry.objects.dates('pub_date', 'month', order='DESC'),
+        'dates': Entry.objects.published().dates('pub_date', 'month', order='DESC'),
     }
 
 @register.inclusion_tag('blog/tag_cloud_tag.html')
