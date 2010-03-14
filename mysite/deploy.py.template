@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+
+DEBUG = False
+
+EMAIL_HOST = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = ''
+EMAIL_PORT = ''
+SERVER_EMAIL = ''
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
+}
+
+MEDIA_URL = ''
+ADMIN_MEDIA_PREFIX = ''
+
+SECRET_KEY = ''
+
+DISQUS_API_KEY = ''
+DISQUS_WEBSITE_SHORTNAME = ''

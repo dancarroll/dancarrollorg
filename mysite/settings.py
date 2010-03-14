@@ -1,7 +1,8 @@
 # Django settings for mysite project.
 import os
+import deploy
 
-DEBUG = False
+DEBUG = deploy.DEBUG
 TEMPLATE_DEBUG = DEBUG
 INTERNAL_IPS = ('127.0.0.1',)
 
@@ -12,36 +13,19 @@ ADMINS = (
 MANAGERS = ADMINS
 
 # These should be defined in the local_settings.py file
-#EMAIL_HOST = ''
-#EMAIL_HOST_PASSWORD = ''
-#EMAIL_HOST_USER = ''
-#EMAIL_PORT = ''
-#SERVER_EMAIL = ''
+EMAIL_HOST = deploy.EMAIL_HOST
+EMAIL_HOST_PASSWORD = deploy.EMAIL_HOST_PASSWORD
+EMAIL_HOST_USER = deploy.EMAIL_HOST_USER
+EMAIL_PORT = deploy.EMAIL_PORT
+SERVER_EMAIL = deploy.SERVER_EMAIL
 
-# These should be defined in the local_settings.py file
-#DATABASE_ENGINE = ''
-#DATABASE_NAME = ''
-#DATABASE_USER = ''
-#DATABASE_PASSWORD = ''
-#DATABASE_HOST = ''
-#DATABASE_PORT = ''
+DATABASES = deploy.DATABASES
 
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# If running in a Windows environment this must be set to the same as your
-# system time zone.
 TIME_ZONE = 'America/Los_Angeles'
-
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
+USE_I18N = False
 
 SITE_ID = 1
-
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
-USE_I18N = False
 
 # Base directory (all other paths should be relative to this path, rather 
 # than hard-coded)
@@ -55,21 +39,21 @@ ADMIN_MEDIA_ROOT = os.path.join(BASE_DIR, 'site-media/admin/')
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = 'http://media.erunama.com/'
+MEDIA_URL = deploy.MEDIA_URL
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = MEDIA_URL + 'admin/'
+ADMIN_MEDIA_PREFIX = deploy.ADMIN_MEDIA_PREFIX
 
 # Make this unique, and don't share it with anybody.
 # This should be defined in the local_settings.py file
-# SECRET_KEY = ''
+SECRET_KEY = deploy.SECRET_KEY
 
 # These should be the API key (http://disqus.com/api/get_my_key/) and website
 # shortname from your DISQUS account.
-# DISQUS_API_KEY = ''
-# DISQUS_WEBSITE_SHORTNAME = ''
+DISQUS_API_KEY = deploy.DISQUS_API_KEY
+DISQUS_WEBSITE_SHORTNAME = deploy.DISQUS_WEBSITE_SHORTNAME
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -80,7 +64,6 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    #'debug_toolbar.middleware.DebugToolbarMiddleware', # will add this to local_settings.py (needs to be after any encoding middleware)
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -121,10 +104,6 @@ XMLRPC_METHODS = (
     ('mysite.metaweblog.metaweblog.get_post', 'test',),
 )
 
-try:
-    from local_settings import *
-except ImportError:
-    pass
 
 if DEBUG:
     MIDDLEWARE_CLASSES = (

@@ -2,7 +2,6 @@ syntax: glob
 
 .svn
 *.pyc
-local_settings.py
-local_settings.development.py
-local_settings.staging.py
-local_settings.production.py
+deploy.py
+deploy.development.py
+deploy.production.py
