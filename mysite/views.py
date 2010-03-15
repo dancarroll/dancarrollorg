@@ -15,7 +15,7 @@ def index(request):
         if request.META['HTTP_USER_AGENT'].find("Windows Live Writer") > -1:
             post = Entry.objects.published().order_by('-pub_date')[0]
             return blog_entry_detail(request, post.slug, post.pub_date.year, post.pub_date.month)
-    except KeyError, IndexError:
+    except (KeyError, IndexError):
         pass
 
     return render_to_response('index.html',
