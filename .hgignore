@@ -2,6 +2,7 @@ syntax: glob
 
 .svn
 *.pyc
+*.swp
 deploy.py
 deploy.development.py
 deploy.production.py

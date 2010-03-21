@@ -19,7 +19,7 @@ class LatestEntriesFeed(Feed):
         return item.title
     
     def item_description(self, item):
-        return item.snip
+        return item.body
         
 class LatestEntriesByTagFeed(Feed):
     def get_object(self, request, tag_name):
@@ -41,4 +41,4 @@ class LatestEntriesByTagFeed(Feed):
         return item.title
     
     def item_description(self, item):
-        return item.snip
+        return item.body
