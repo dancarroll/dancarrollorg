@@ -79,7 +79,6 @@ class InfinitePage(Page):
         self.number = number
         self.paginator = paginator
         self.cached_has_next = None
-        self.queried_for_next = False
 
     def __repr__(self):
         return '<Page %s>' % self.number
@@ -88,10 +87,9 @@ class InfinitePage(Page):
         """
         Checks for one more item than last on this page.
         """
-        if self.queried_for_next:
+        if self.cached_has_next != None:
             return self.cached_has_next
 
-        self.queried_for_next = True
         try:
             next_item = self.paginator.object_list[
                 self.number * self.paginator.per_page]
