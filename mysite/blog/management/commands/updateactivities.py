@@ -204,7 +204,7 @@ class Command(NoArgsCommand):
                             added_item_list.append("Unexpected error with feed: %s\n\n" % sys.exc_info()[0])
         except:
             print "Unexpected error:", sys.exc_info()[0]
-            added_item_list.append("Unexpected error: %s\n\n" % sys.exc_info()[0])             
+            #added_item_list.append("Unexpected error: %s\n\n" % sys.exc_info()[0])
         finally:
             return added_item_list
 
