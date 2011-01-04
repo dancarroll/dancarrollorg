@@ -120,9 +120,15 @@ class InfinitePage(Page):
             return self.paginator.link_template % (self.number - 1)
         return None
 
+    def page_title(self):
+        if self.number > 1:
+            return 'Page %s' % self.number
+        return None
+
     def create_template_context(self):
         return {
             'object_list': self.object_list,
+            'page_title': self.page_title(),
             'has_next': self.has_next(),
             'has_previous': self.has_previous(),
             'next': self.next_link(),

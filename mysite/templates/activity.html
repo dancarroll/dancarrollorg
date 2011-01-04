@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} | Activity{% endblock %}
+{% block title %} | Activity{% if page_title %} | {{ page_title }}{% endif %}{% endblock %}
 
 {% block content %}
     {% for activity in object_list %}
