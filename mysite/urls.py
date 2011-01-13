@@ -22,7 +22,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     
     # Main sections
-    url(r'^activity/$', view='mysite.views.activity', name='main_activity'),
+    url(r'^activity/$', view='activitysync.views.activity', name='main_activity'),
     url(r'^blog/', include('mysite.blog.urls')),
     
     # RSS feeds
