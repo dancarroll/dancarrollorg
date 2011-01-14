@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from mysite.blog.models import Entry
+from activitysync.models import Activity
 from blog.views import blog_entry_detail
 
 def index(request):
