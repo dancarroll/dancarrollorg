@@ -34,6 +34,9 @@ urlpatterns = patterns('',
     
     # MetaWeblog integration
     url(r'^mw/', include('mysite.metaweblog.urls')),
+
+    # Robots.txt
+    url(r'^robots.txt$', view='mysite.views.robots', name='robots'),
     
     # Main site index
     url(r'^$', view='mysite.views.index', name='main_index'),

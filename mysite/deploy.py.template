@@ -2,6 +2,12 @@
 
 DEBUG = False
 
+ADMINS = (
+    ('Admin Name', 'admin@example.com'),
+)
+
+SITE_OWNER = 'Author'
+
 EMAIL_HOST = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_HOST_USER = ''
@@ -19,11 +25,15 @@ DATABASES = {
     }
 }
 
+TIME_ZONE = 'America/Los_Angeles'
+
 MEDIA_URL = ''
 ADMIN_MEDIA_PREFIX = ''
 
 SECRET_KEY = ''
 
+# These should be the API key (http://disqus.com/api/get_my_key/) and website
+# shortname from your DISQUS account.
 DISQUS_API_KEY = ''
 DISQUS_WEBSITE_SHORTNAME = ''
 

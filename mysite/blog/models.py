@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.contrib.syndication.feeds import Feed
 from django.template.defaultfilters import slugify
@@ -59,10 +60,9 @@ class Entry(models.Model):
         struct = {
             'title': self.title,
             'link': "http://%s%s" % (
-                #Site.objects.get_current().domain, self.get_absolute_url()),
-                "127.0.0.1:8000", self.get_absolute_url()),
+                Site.objects.get_current().domain, self.get_absolute_url()),
             'description': self.body,
-            'author': 'Dan Carroll',
+            'author': '%s' % settings.SITE_OWNER,
             'comments': "http://%s%s" % (
                 Site.objects.get_current().domain, self.get_absolute_url()),
             'guid': "http://%s%s" % (

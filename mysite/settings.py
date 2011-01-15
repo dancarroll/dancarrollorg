@@ -5,12 +5,13 @@ import deploy
 DEBUG = deploy.DEBUG
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    ('Dan Carroll', 'admin@dancarroll.org'),
-)
-
+ADMINS = deploy.ADMINS
 MANAGERS = ADMINS
 SEND_BROKEN_LINK_EMAILS = True
+
+# Site owner will be used throughout the site.
+# This should represent the site author.
+SITE_OWNER = deploy.SITE_OWNER
 
 # These should be defined in the local_settings.py file
 EMAIL_HOST = deploy.EMAIL_HOST
@@ -21,7 +22,7 @@ SERVER_EMAIL = deploy.SERVER_EMAIL
 
 DATABASES = deploy.DATABASES
 
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = deploy.TIME_ZONE
 LANGUAGE_CODE = 'en-us'
 USE_I18N = False
 
@@ -54,6 +55,8 @@ SECRET_KEY = deploy.SECRET_KEY
 # shortname from your DISQUS account.
 DISQUS_API_KEY = deploy.DISQUS_API_KEY
 DISQUS_WEBSITE_SHORTNAME = deploy.DISQUS_WEBSITE_SHORTNAME
+
+GOOGLE_ANALYTICS_CODE = deploy.GOOGLE_ANALYTICS_CODE
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (

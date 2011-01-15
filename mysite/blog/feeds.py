@@ -4,9 +4,10 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from mysite.blog.models import Entry
 from tagging.models import Tag, TaggedItem
+from django.contrib.sites.models import Site
 
 class LatestEntriesFeed(Feed):
-    title = "Dan Carroll | Blog"
+    title = "%s | Blog" % Site.objects.get_current().name
     link = "/"
     
     def items(self):
@@ -26,7 +27,7 @@ class LatestEntriesByTagFeed(Feed):
         return get_object_or_404(Tag, name=tag_name)
         
     def title(self, obj):
-        return "Dan Carroll | Blog | %s" % obj.name
+        return "%s | Blog | %s" % (Site.objects.get_current().name, obj.name)
         
     def link(self, obj):
         return reverse('blog_tag_detail', args=[obj.name])

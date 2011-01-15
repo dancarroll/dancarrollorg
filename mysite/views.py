@@ -1,3 +1,5 @@
+from django.contrib.sites.models import Site
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
@@ -21,4 +23,10 @@ def index(request):
                 {'blog_entries': Entry.objects.published_for_list()[:2],
                  'activities': Activity.objects.published()[:5] },
                 context_instance=RequestContext(request))
+
+def robots(request):
+    return HttpResponse("User-Agent: *\nDisallow:\nSitemap: http://%s/sitemap.xml" %
+        Site.objects.get_current().domain,
+        status=200,
+        mimetype='text/plain')
 
