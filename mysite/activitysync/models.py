@@ -27,7 +27,6 @@ class Activity(models.Model):
     class Meta:
         verbose_name = 'activity'
         verbose_name_plural = 'activities'
-        db_table = 'blog_activities'
         ordering = ('-pub_date',)
         get_latest_by = 'pub_date'
     

@@ -91,6 +91,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'activitysync',
     'mysite.blog',
     'disqus',
     'tagging',
@@ -126,5 +127,5 @@ if DEBUG:
                 if fnmatch(key, elt): return True
             return False
 
-    INTERNAL_IPS = glob_list(['127.0.0.1', '192.168.0.*'])
+    INTERNAL_IPS = glob_list(['127.0.0.1', '192.168.*.*'])
 

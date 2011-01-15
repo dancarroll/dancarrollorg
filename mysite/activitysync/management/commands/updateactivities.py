@@ -2,7 +2,7 @@ from django.core.management.base import NoArgsCommand
 from django.core.management.color import no_style
 from django.core.mail import mail_admins
 from optparse import make_option
-from blog.models import Activity
+from activitysync.models import Activity
 
 import os
 import sys
