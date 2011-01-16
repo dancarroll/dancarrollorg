@@ -2,6 +2,10 @@
 import os
 import deploy
 
+ACTIVITYSYNC_PROVIDERS = (
+    'activitysync.providers.googlereader.GoogleReaderProvider',
+)
+
 DEBUG = deploy.DEBUG
 TEMPLATE_DEBUG = DEBUG
 
