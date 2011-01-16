@@ -5,30 +5,31 @@ import time
 import datetime
 import feedparser
 
-class GoogleReaderProvider(ActivityProvider):
+class RedditProvider(ActivityProvider):
     """
-    Provider for accessing shared Google Reader items for one user.
+    Provider for accessing liked Reddit items for one user.
     """
-#class ActivityInfo(object):
-#    def __init__(self, title=None, link=None, username=None, author=None, comments=None, pub_data=None, published=True, guid=None)
-
+    
     def get_activity(self):
         item_list = []
 
-        print 'Attempting to parse Google Reader feed'
-        parsed_feed = feedparser.parse(settings.GOOGLEREADER_SHARED_RSS)
-    
+        print 'Attempting to parse Reddit feed'
+        username = settings.REDDIT_USERNAME
+        parsed_feed = feedparser.parse("http://www.reddit.com/user/%s/liked/.rss" % username)
+
         for entry in parsed_feed.entries:
             title = entry.title.encode(parsed_feed.encoding, "xmlcharrefreplace")
             guid = entry.get("id", entry.link).encode(parsed_feed.encoding, "xmlcharrefreplace")
             link = entry.link.encode(parsed_feed.encoding, "xmlcharrefreplace")
 
-            shared_by = u"Dan Carroll"
-            comments =u""
-                
             if not guid:
                 guid = link
-                    
+
+            if entry.has_key('author'):
+                author = entry.author.encode(parsed_feed.encoding, "xmlcharrefreplace")
+            else:
+                author = u''
+
             try:
                 if entry.has_key('published_parsed'):
                     date_published = datetime.datetime.fromtimestamp(time.mktime(entry.published_parsed) - time.timezone)
@@ -40,26 +41,22 @@ class GoogleReaderProvider(ActivityProvider):
                     date_published = datetime.datetime.now()
             except TypeError:
                 date_published = datetime.datetime.now()
-                        
-            if entry.has_key('content'):        
-                if len(entry.content) == 2:
-                    comments = entry.content[1].value.encode(parsed_feed.encoding, "xmlcharrefreplace")
-            
-            activity_info = ActivityInfo(title=title, link=link, pub_date=date_published, guid=guid, username=shared_by, author=shared_by, comments=comments)
+                    
+            activity_info = ActivityInfo(title=title, link=link, pub_date=date_published, guid=guid, username=username, author=author)
             item_list.append(activity_info)
 
         return item_list
 
 
     def name(self):
-        return 'Google Reader'
+        return 'Reddit'
 
     def prefix(self):
-        return 'Shared'
+        return 'Liked'
 
     def link(self):
-        return settings.GOOGLEREADER_PUBLIC_URL
+        return 'http://www.reddit.com/user/%s/' % settings.REDDIT_USERNAME
 
     def sourceid(self):
-        return 'googlereader'
+        return 'reddit'
 

@@ -2,10 +2,6 @@
 import os
 import deploy
 
-ACTIVITYSYNC_PROVIDERS = (
-    'activitysync.providers.googlereader.GoogleReaderProvider',
-)
-
 DEBUG = deploy.DEBUG
 TEMPLATE_DEBUG = DEBUG
 
@@ -107,6 +103,18 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'south',
 )
+
+# Activity sync settings
+ACTIVITYSYNC_PROVIDERS = (
+    'activitysync.providers.googlereader.GoogleReaderProvider',
+    'activitysync.providers.twitterprovider.TwitterProvider',
+    'activitysync.providers.redditprovider.RedditProvider',
+)
+
+TWITTER_USERNAME = deploy.TWITTER_USERNAME
+REDDIT_USERNAME = deploy.REDDIT_USERNAME
+GOOGLEREADER_SHARED_RSS = deploy.GOOGLEREADER_SHARED_RSS
+GOOGLEREADER_PUBLIC_URL = deploy.GOOGLEREADER_PUBLIC_URL
 
 XMLRPC_METHODS = (
     # We list methods to be exposed in the form (<method path>, <xml-rpc name>,)
