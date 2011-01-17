@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.core.management.color import no_style
 from django.core.mail import mail_admins
 from optparse import make_option
-from activitysync.models import Activity
+from activitysync.models import Provider, Activity
 from activitysync.providers import ActivityProvider, ActivityInfo
 
 import os
@@ -53,6 +53,19 @@ class Command(BaseCommand):
 
                 provider_instance = provider_class()
                 email_status_info.append('\n\n%s\n\n' % provider_instance.name())
+
+                # Create Provider model object if it does not exist
+                try:
+                    providerModelObject = Provider.objects.get(sourceid=provider_instance.sourceid())
+                except Provider.DoesNotExist:
+                    print 'First time seeing provider with sourceid: %s' % provider_instance.sourceid()
+                    providerModelObject = Provider.objects.create(
+                        name=provider_instance.name(),
+                        prefix=provider_instance.prefix(),
+                        link=provider_instance.link(),
+                        sourceid=provider_instance.sourceid()
+                    )
+
                 for activity_item in provider_instance.get_activity():
                     try:
                         Activity.objects.get(guid=activity_item.guid)
@@ -63,7 +76,8 @@ class Command(BaseCommand):
                         
                         if dry_run:
                             print 'Dry run, not creating item'
-                            #Activity.objects.create(title=activity_item.title, link=activity_item.link, source=provider_instance.sourceid(), username=activity_item.username, author=activity_item.author, comments=activity_item.comments, pub_date=activity_item.pub_date, published=activity_item.published, guid=activity_item.guid)
+                        else:
+                            Activity.objects.create(title=activity_item.title, link=activity_item.link, username=activity_item.username, author=activity_item.author, comments=activity_item.comments, pub_date=activity_item.pub_date, published=activity_item.published, guid=activity_item.guid, provider=providerModelObject)
 
         except:
             ### DEBUGGING CODE

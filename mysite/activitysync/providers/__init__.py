@@ -26,7 +26,7 @@ class ActivityProvider(object):
         raise NotImplementedError
 
 class ActivityInfo(object):
-    def __init__(self, title, link, pub_date, guid, username=None, author=None, comments=None, published=True):
+    def __init__(self, title, link, pub_date, guid, username=None, author=None, comments='', published=True):
         self.title = title
         self.link = link
         self.username = username
