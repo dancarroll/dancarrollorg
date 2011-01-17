@@ -1,6 +1,22 @@
 from django.db import models
-from activitysync.managers import PublishedManager
+from activitysync.managers import ActivityManager
 import datetime
+
+class Provider(models.Model):
+    """Provider represents a particular social network"""
+    name = models.CharField(max_length=50)
+    prefix = models.CharField(max_length=50, blank=True)
+    link = models.URLField(max_length=500)
+    sourceid = models.CharField(max_length=20, primary_key=True, unique=True, db_index=True)
+
+    class Meta:
+        verbose_name = 'provider'
+        verbose_name_plural = 'providers'
+        ordering = ('name',)
+    
+    def __unicode__(self):
+        return u'%s' % self.name
+
 
 class Activity(models.Model):
     """Activity from social network (Twitter, Flickr, etc)."""
@@ -22,7 +38,10 @@ class Activity(models.Model):
     pub_date = models.DateTimeField('Date published')
     published = models.BooleanField(default=True)
     guid = models.CharField(max_length=255, unique=True, db_index=True)
-    objects = PublishedManager()
+
+    provider = models.ForeignKey(Provider, null=True)
+
+    objects = ActivityManager()
     
     class Meta:
         verbose_name = 'activity'

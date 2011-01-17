@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.core import exceptions
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand, CommandError
 from django.core.management.color import no_style
 from django.core.mail import mail_admins
 from optparse import make_option
@@ -10,17 +10,27 @@ from activitysync.providers import ActivityProvider, ActivityInfo
 import os
 import sys
 import time
-import socket
 import datetime
 import feedparser
 import twitter
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
+    option_list = BaseCommand.option_list + (
+        make_option('--send-result', '-s', default=False, action='store_true', dest='sendmail',
+            help='Send email with new activities to site admins'),
+        make_option('--dry-run', '-d', default=False, action='store_true', dest='dryrun',
+            help='Gather activities, but do not create items in database'),
+    )
     help = "Update activities by depositing them into the blog database."
 
-    def handle_noargs(self, **options): 
+    def handle(self, *args, **options): 
         self.style = no_style()
-        
+        if len(args) != 0:
+            raise CommandError("Command does not accept any arguments")
+
+        send_email = options.get('sendmail')
+        dry_run = options.get('dryrun')
+
         email_status_info = []
         items_added = False
         try:
@@ -50,8 +60,10 @@ class Command(NoArgsCommand):
                         print "Created item: %s (%s)" % (activity_item.title, activity_item.link)
                         email_status_info.append("Created item: %s (%s)\n" % (activity_item.title, activity_item.link))
                         items_added = True
-
-                        #Activity.objects.create(title=activity_item.title, link=activity_item.link, source=provider_instance.sourceid(), username=activity_item.username, author=activity_item.author, comments=activity_item.comments, pub_date=activity_item.pub_date, published=activity_item.published, guid=activity_item.guid)
+                        
+                        if dry_run:
+                            print 'Dry run, not creating item'
+                            #Activity.objects.create(title=activity_item.title, link=activity_item.link, source=provider_instance.sourceid(), username=activity_item.username, author=activity_item.author, comments=activity_item.comments, pub_date=activity_item.pub_date, published=activity_item.published, guid=activity_item.guid)
 
         except:
             ### DEBUGGING CODE
@@ -68,7 +80,7 @@ class Command(NoArgsCommand):
                         mailBody = mailBody.encode('utf-8') + itemString.encode('utf-8')
                     except UnicodeDecodeError:
                         mailBody = mailBody + "\n\nFAILED TO PARSE ACTIVITY\n\n"
-                ### DISABLED TEMPORARILY FOR DEBUGGING
-                #mail_admins('Update Activities command completed', mailBody, fail_silently=False)
-                #print 'Mail sent to admins'
-                ### END DISABLE
+                if send_email:
+                    mail_admins('Update Activities command completed', mailBody, fail_silently=False)
+                    print 'Mail sent to admins'
+
