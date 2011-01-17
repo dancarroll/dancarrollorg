@@ -27,8 +27,6 @@ Graham Binns for a starting point for using django-xmlrpc to implement the MetaW
 
 Components used:
 ----------------
-django-tagging
-feedparser
-django-disqus
-simplejson
-python-twitter (http://code.google.com/p/python-twitter/)
+All required components are listed in the requirements file.  To install these dependencies, use the following command (ideally run inside of a virtualenv):
+pip install -r requirements.txt
+

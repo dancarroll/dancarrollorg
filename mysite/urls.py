@@ -22,7 +22,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     
     # Main sections
-    url(r'^activity/$', view='mysite.views.activity', name='main_activity'),
+    url(r'^activity/$', view='activitysync.views.activity', name='main_activity'),
     url(r'^blog/', include('mysite.blog.urls')),
     
     # RSS feeds
@@ -34,6 +34,9 @@ urlpatterns = patterns('',
     
     # MetaWeblog integration
     url(r'^mw/', include('mysite.metaweblog.urls')),
+
+    # Robots.txt
+    url(r'^robots.txt$', view='mysite.views.robots', name='robots'),
     
     # Main site index
     url(r'^$', view='mysite.views.index', name='main_index'),
