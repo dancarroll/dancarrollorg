@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} | Blog{% endblock %}
+{% block title %} | Blog{% if page_title %} | {{ page_title }}{% endif %}{% endblock %}
 
 {% block content %}
     <div id="sidebar" class="fRight rightContent">
