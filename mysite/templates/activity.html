@@ -2,19 +2,8 @@
 {% block title %} | Activity{% if page_title %} | {{ page_title }}{% endif %}{% endblock %}
 
 {% block content %}
-    {% for activity in object_list %}
-        {% ifchanged activity.pub_date.date %}
-            {% if not forloop.first %}</ul></div>{% endif %}
-            
-            <h2 class="section-title">{{ activity.pub_date|date:"F j" }}</h2>
-            <div id="activity-list"><ul>
-        {% endifchanged %}
-        
-        <li><a href="{{ activity.provider.link }}"><img src="{{ MEDIA_URL }}networks/{{ activity.provider.sourceid }}.png" alt="{{ activity.provider.name }}" /></a>{{ activity.provider.prefix }} <a href="{{ activity.link }}">{{ activity.title }}</a>
-        <span class="time">{{ activity.pub_date|timesince|upper }} AGO</span></li>
-    
-    {% endfor %}
-        </ul></div>
+    {% load activitysync_extras %}
+    {% render_activities_with_date_headers object_list %}
     <div class="indicator">
         {% if has_previous %}<a href="{{ previous }}">&#171; Newer</a>{% endif %}
         {% if has_previous and has_next %}|{% endif %}

@@ -1,0 +1,13 @@
+{% if not use_date_headers %}<div id="activity-list"><ul>{% endif %}
+{% for activity in activities %}
+{% if use_date_headers %}    
+    {% ifchanged activity.pub_date.date %}
+        {% if not forloop.first %}</ul></div>{% endif %}
+        <h2 class="section-title">{{ activity.pub_date|date:"F j" }}</h2>
+        <div id="activity-list"><ul>
+    {% endifchanged %}
+{% endif %}
+    <li><a href="{{ activity.provider.link }}"><img src="{{ MEDIA_URL }}networks/{{ activity.provider.sourceid }}.png" alt="{{ activity.provider.name }}" /></a>{{ activity.provider.prefix }} <a href="{{ activity.link }}">{{ activity.title }}</a> <span class="time">{{ activity.pub_date|timesince|upper }} AGO</span></li>
+    
+{% endfor %}
+</ul></div>
