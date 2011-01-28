@@ -9,7 +9,7 @@ from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 
 from django_xmlrpc.decorators import xmlrpc_func
-from mysite.blog.models import Entry
+from blog.models import Entry
 from tagging.models import Tag
 
 
