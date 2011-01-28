@@ -132,6 +132,8 @@ if DEBUG:
         'INTERCEPT_REDIRECTS': False,
     }
 
+    SEND_BROKEN_LINK_EMAILS = False
+
     # Match local network IPs to allow access from other machines
     from fnmatch import fnmatch
     class glob_list(list):
