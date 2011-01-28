@@ -117,12 +117,8 @@ REDDIT_USERNAME = deploy.REDDIT_USERNAME
 GOOGLEREADER_SHARED_RSS = deploy.GOOGLEREADER_SHARED_RSS
 GOOGLEREADER_PUBLIC_URL = deploy.GOOGLEREADER_PUBLIC_URL
 
-XMLRPC_METHODS = (
-    # We list methods to be exposed in the form (<method path>, <xml-rpc name>,)
-    ('mysite.metaweblog.metaweblog.get_post', 'test',),
-)
 
-
+# Some special settings to aid development in debug mode
 if DEBUG:
     MIDDLEWARE_CLASSES = (
         'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -136,6 +132,7 @@ if DEBUG:
         'INTERCEPT_REDIRECTS': False,
     }
 
+    # Match local network IPs to allow access from other machines
     from fnmatch import fnmatch
     class glob_list(list):
         def __contains__(self, key):
